@@ -1,17 +1,95 @@
 import React, {Component} from 'react'
+import { login } from '../actions/users'
+import { connect } from 'react-redux'
+import Modal from 'react-modal';
+import {withRouter} from 'react-router'
 
-export default class Login extends Component {
+
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
+
+Modal.setAppElement('#root')
+
+class Login extends Component {
+
+  state = {
+    email: '',
+    password: ''
+  }
+
+
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault()
+    // this.setState({
+    //   username: '',
+    //   password: ''
+    // })
+    fetch('http://localhost:3000/login', {
+      method: 'POST',
+      headers: {
+        'Accepts': 'application/json',
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({
+        user: this.state
+      })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.errors) {
+          alert(data.errors)
+        } else {
+          console.log(data)
+          localStorage.setItem('token', data.token)
+          this.props.login(data.user)
+        }
+      })
+      .then(this.props.history.push('/'))
+  }
+
   render(){
     return(
       <div>
-        <form>
-         <input placeholder='email' type="text">
+      <Modal
+      style={customStyles}
+      isOpen= {true}
+
+      >
+        <form onSubmit={this.handleSubmit}>
+         <input
+           placeholder='email'
+           name='email'
+           onChange={this.handleChange}
+           value={this.state.email}
+           type="text">
          </input>
-         <input placeholder='password' type="text">
+         <input
+           placeholder='password'
+           name='password'
+           onChange={this.handleChange}
+           value={this.state.password}
+           type="text">
          </input>
          <button type='submit'>Log in</button>
         </form>
+        </Modal>
       </div>
     )
   }
 }
+
+export default withRouter(connect(null, {login})(Login))

@@ -10,7 +10,7 @@ export const fetchItems = () => {
   }
 }
 
-export const addListing = item => {
+export const addListing = (item, userId) => {
   return (dispatch) => {
     fetch('http://localhost:3000/items', {
       method: 'POST',
@@ -21,12 +21,13 @@ export const addListing = item => {
     })
     .then(resp => resp.json())
     .then(itemObj => {
+      console.log(userId);
       fetch('http://localhost:3000/own_items',{
         method: 'POST',
         headers: {
           'content-type' : 'application/json'
         },
-        body: JSON.stringify({user_id: 13, item_id: itemObj.id})
+        body: JSON.stringify({user_id: userId, item_id: itemObj.id})
       })
     })
   }
@@ -38,19 +39,3 @@ export const itemShow = item => {
     item: item
   }
 }
-// export const removeQuote = quoteId => {
-//   return {
-//     type: 'REMOVE_QUOTE', quoteId
-//   }
-// }
-// export const upvoteQuote = quoteId => {
-//   console.log(quoteId);
-//   return {
-//     type: 'UPVOTE_QUOTE', quoteId
-//   }
-// }
-// export const downvoteQuote = quoteId => {
-//   return {
-//     type: 'DOWNVOTE_QUOTE', quoteId
-//   }
-// }

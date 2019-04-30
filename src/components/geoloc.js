@@ -1,32 +1,31 @@
-import React from 'react';
-import {geolocated} from 'react-geolocated';
+import React, { Fragment } from 'react';
 
 class Demo extends React.Component {
+  state = {
+    lat: 0,
+    long: 0
+  }
+
+  async componentDidMount() {
+    if (window.navigator.geolocation) {
+      await navigator.geolocation.getCurrentPosition(position => {
+        this.setState({lat: position.coords.latitude})
+      })}
+
+  }
+
+  lat = navigator.geolocation.getCurrentPosition(position => {
+    return position.coords.latitude})
+
   render() {
-    console.log(this.props.isGeolocationEnabled);
-    console.log(this.props);
-    // if(location.protocol != 'https:') {}
-    return !this.props.isGeolocationAvailable
-      ? <div>Your browser does not support Geolocation</div>
-      : !this.props.isGeolocationEnabled
-        ? <div>Geolocation is not enabled</div>
-        : this.props.coords
-          ? <table>
-            <tbody>
-              <tr><td>latitude</td><td>{this.props.coords.latitude}</td></tr>
-              <tr><td>longitude</td><td>{this.props.coords.longitude}</td></tr>
-              <tr><td>altitude</td><td>{this.props.coords.altitude}</td></tr>
-              <tr><td>heading</td><td>{this.props.coords.heading}</td></tr>
-              <tr><td>speed</td><td>{this.props.coords.speed}</td></tr>
-            </tbody>
-          </table>
-          : <div>Getting the location data&hellip; </div>;
+    return (
+      <Fragment>
+      <h1>Anything</h1>
+        <h1>{this.lat}</h1>
+        <h1>{this.state.lat}</h1>
+      </Fragment>
+    )
   }
 }
 
-export default geolocated({
-  positionOptions: {
-    enableHighAccuracy: false,
-  },
-  userDecisionTimeout: 5000,
-})(Demo);
+export default Demo;

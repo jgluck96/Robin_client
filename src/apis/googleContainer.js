@@ -7,6 +7,16 @@ import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react'
 
 class Container extends React.Component {
 
+  state = {
+    lat: '',
+    lng: ''
+  }
+
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition((position) => {
+      this.setState({lat: position.coords.latitude, lng: position.coords.longitude})
+    })
+  }
 
 
   render() {
@@ -28,6 +38,7 @@ class Container extends React.Component {
     if (!this.props.loaded) {
       return <div>Loading...</div>
     }
+    console.log(this.state);
     return (
       <div style={style}>
       <Map google={this.props.google}

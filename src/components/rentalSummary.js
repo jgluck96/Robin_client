@@ -1,6 +1,9 @@
 import React, {Component} from "react";
 import DatePicker from "react-datepicker";
 import {connect} from 'react-redux'
+import Modal from './modal'
+import { openModal } from '../actions/modal'
+import { itemShow } from '../actions/items'
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -20,6 +23,13 @@ class RentalTotal extends Component {
 
     };
 
+
+      // if (localStorage.getItem('currentItem')) {
+      //   console.log('here');
+      //   this.props.itemShow(JSON.parse(localStorage.getItem('currentItem')))
+      // }
+
+
   handleChangeStart = (date) => {
 
     var startDate = this.formatDate(date)
@@ -36,16 +46,18 @@ class RentalTotal extends Component {
   }
 
   formatDate = date => {
-    var endDate = date
-    var dd = endDate.getDate();
-    var mm = endDate.getMonth() + 1;
+    if (date) {
+      var endDate = date
+      var dd = endDate.getDate();
+      var mm = endDate.getMonth() + 1;
 
-    var yyyy = endDate.getFullYear();
-    if (dd < 10) {
-      dd = '0' + dd;
-    }
-    if (mm < 10) {
-      mm = '0' + mm;
+      var yyyy = endDate.getFullYear();
+      if (dd < 10) {
+        dd = '0' + dd;
+      }
+      if (mm < 10) {
+        mm = '0' + mm;
+      }
     }
     return mm + '/' + dd + '/' + yyyy
   }
@@ -91,7 +103,7 @@ class RentalTotal extends Component {
         'content-type' : 'application/json'
       },
       body: JSON.stringify({
-        user_id: 13,
+        user_id: this.props.user.id,
         item_id: this.props.item.id,
         date_start: this.state.formattedStart,
         date_end: this.state.formattedEnd,
@@ -103,15 +115,28 @@ class RentalTotal extends Component {
     })
   }
 
-  checkDate = () => {
-    return this.state.startDate ?
-    this.state.startDate
-    :
-     new Date()
-
+  summary = (e) => {
+    e.preventDefault()
+    this.props.openModal()
   }
 
+
+  getDateArray = (start, end) => {
+      const arr = new Array();
+      const dt = new Date(start);
+      while (dt <= end) {
+          arr.push(new Date(dt));
+          dt.setDate(dt.getDate() + 1);
+      }
+      return arr;
+  }
+
+
+
+
+
   render() {
+    const mergedDates = [].concat.apply([], this.props.item.rentals.map(rental => this.getDateArray(new Date(rental.date_start), new Date(rental.date_end))))
     return (
       <div>
       <form id="booking-form" action="#" className="form">
@@ -119,10 +144,12 @@ class RentalTotal extends Component {
               <label className="form-labelR">Beginning on:</label>
               <div className="datepicker-container datepicker-container-right">
               <DatePicker className="form-controlR"
+              disableKeyboardNavigation={true}
                 placeholderText="start date"
                 selected={this.state.startDate}
                 selectsStart
                 startDate={this.state.startDate}
+                excludeDates={mergedDates}
                 endDate={this.state.endDate}
                 onChange={this.handleChangeStart}
                 minDate={new Date()}
@@ -135,6 +162,7 @@ class RentalTotal extends Component {
                 placeholderText='end date'
                 selected={this.state.endDate}
                 selectsEnd
+                excludeDates={mergedDates}
                 startDate={this.state.startDate}
                 endDate={this.state.endDate}
                 onChange={this.handleChangeEnd}
@@ -157,18 +185,33 @@ class RentalTotal extends Component {
                 </div>
               </div>
             <div className="form-group">
-              <button onClick={this.submitRental} type="submit" className="btn btn-primary btn-block">Request to rent</button>
+              <button onClick={this.summary} type="submit" className="btn btn-primary btn-block">Request to rent</button>
             </div>
           </form>
+          {this.props.modal ?
+          <Modal>
+            <div>
+              <div>Total Price: <span>${this.state.total}</span></div>
+            </div>
+            <hr className="my-4"/>
+            <textarea placeholder="message.."></textarea>
+            <button onClick={this.submitRental} className="btn btn-primary">send message</button>
+          </Modal>
+          :
+          null
+        }
       </div>
     )
   }
 }
 
   const mapStateToProps = state => {
+console.log(state);
     return {
-      item: state.showItem
+      item: state.showItem,
+      user: state.user,
+      modal: state.modal
     }
   }
 
-export default connect(mapStateToProps)(RentalTotal)
+export default connect(mapStateToProps, {openModal, itemShow})(RentalTotal)
