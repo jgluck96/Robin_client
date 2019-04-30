@@ -40,8 +40,7 @@ class ListItemForm extends Component {
           rental_price: this.state.rental_price,
           id: uuid()
         }
-        console.log('before action', item);
-        this.props.addListing(item)
+        this.props.addListing(item, this.props.user.id)
         this.setState({
           title: '',
           description: '',
@@ -84,4 +83,10 @@ class ListItemForm extends Component {
   }
 }
 
-export default connect(null, {addListing})(ListItemForm)
+  const mapStateToProps = state => {
+    return {
+      user: state.user
+    }
+  }
+
+export default connect(mapStateToProps, {addListing})(ListItemForm)

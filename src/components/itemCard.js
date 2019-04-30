@@ -9,6 +9,7 @@ import {connect} from 'react-redux'
 class ItemCard extends Component {
 
   show = item => {
+    localStorage.setItem("currentItem", JSON.stringify(item))
     this.props.itemShow(item)
     this.props.history.push('/item-show')
   }
