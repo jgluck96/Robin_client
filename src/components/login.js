@@ -1,22 +1,10 @@
 import React, {Component} from 'react'
 import { login } from '../actions/users'
 import { connect } from 'react-redux'
-import Modal from 'react-modal';
+import Modal from './modal';
 import {withRouter} from 'react-router'
 
 
-const customStyles = {
-  content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
-  }
-};
-
-Modal.setAppElement('#root')
 
 class Login extends Component {
 
@@ -64,11 +52,6 @@ class Login extends Component {
   render(){
     return(
       <div>
-      <Modal
-      style={customStyles}
-      isOpen= {true}
-
-      >
         <form onSubmit={this.handleSubmit}>
          <input
            placeholder='email'
@@ -86,7 +69,6 @@ class Login extends Component {
          </input>
          <button type='submit'>Log in</button>
         </form>
-        </Modal>
       </div>
     )
   }

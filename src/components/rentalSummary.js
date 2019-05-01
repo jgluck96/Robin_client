@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import DatePicker from "react-datepicker";
 import {connect} from 'react-redux'
 import Modal from './modal'
-import { openModal } from '../actions/modal'
+import { openModal, closeModal } from '../actions/modal'
 import { itemShow } from '../actions/items'
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -24,15 +24,10 @@ class RentalTotal extends Component {
     };
 
 
-      // if (localStorage.getItem('currentItem')) {
-      //   console.log('here');
-      //   this.props.itemShow(JSON.parse(localStorage.getItem('currentItem')))
-      // }
-
 
   handleChangeStart = (date) => {
 
-    var startDate = this.formatDate(date)
+    const startDate = this.formatDate(date)
     this.setState({
       startDate: date,
       formattedStart: startDate,
@@ -47,7 +42,7 @@ class RentalTotal extends Component {
 
   formatDate = date => {
     if (date) {
-      var endDate = date
+      const endDate = date
       var dd = endDate.getDate();
       var mm = endDate.getMonth() + 1;
 
@@ -66,14 +61,14 @@ class RentalTotal extends Component {
 
     if(!this.state.startDate) {
 
-      var startDate = this.formatDate(date)
+      const startDate = this.formatDate(date)
       this.setState({
         startDate: date,
         formattedStart: startDate
       })
     } else {
 
-      var endDate = this.formatDate(date)
+      const endDate = this.formatDate(date)
       if (endDate !== this.state.formattedStart) {
 
         this.setState({
@@ -131,7 +126,31 @@ class RentalTotal extends Component {
       return arr;
   }
 
-
+  sendRequest = () => {
+    fetch('http://localhost:3000/own_items')
+      .then(resp => resp.json())
+      .then(ownItems => {
+        const foundOwner = ownItems.find(item => item.item_id === this.props.item.id).user_id
+        fetch('http://localhost:3000/requests', {
+          method: 'POST',
+          headers: {
+            'content-type' : 'application/json'
+          },
+          body: JSON.stringify({
+            requester_id: this.props.user.id,
+            receiver_id: foundOwner,
+            item_id: this.props.item.id,
+            date_start: this.state.formattedStart + ' ' + new Date().toLocaleTimeString().split(' ')[0],
+            date_end: this.state.formattedEnd + ' ' + new Date().toLocaleTimeString().split(' ')[0],
+            days_rented: this.state.days,
+            subtotal: this.state.subtotal,
+            service_fee: this.state.service_fee,
+            total_price: this.state.total
+          })
+        })
+      })
+      this.props.closeModal()
+  }
 
 
 
@@ -195,7 +214,7 @@ class RentalTotal extends Component {
             </div>
             <hr className="my-4"/>
             <textarea placeholder="message.."></textarea>
-            <button onClick={this.submitRental} className="btn btn-primary">send message</button>
+            <button onClick={this.sendRequest} className="btn btn-primary">send request</button>
           </Modal>
           :
           null
@@ -209,9 +228,10 @@ class RentalTotal extends Component {
 console.log(state);
     return {
       item: state.showItem,
+      items: state.items,
       user: state.user,
-      modal: state.modal
+      modal: state.requestModal
     }
   }
 
-export default connect(mapStateToProps, {openModal, itemShow})(RentalTotal)
+export default connect(mapStateToProps, {openModal, itemShow, closeModal})(RentalTotal)

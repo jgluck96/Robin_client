@@ -19,29 +19,6 @@ class Modal extends Component {
     portalRoot.removeChild(this.el)
   }
 
-  // style={{
-  //   position: 'absolute',
-  //   top: '0',
-  //   bottom: '0',
-  //   left: '0',
-  //   display: 'grid',
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   backgroundColor: 'rgba(0,0,0,0.3)'
-  // }}
-
-  // style={{
-  //   padding: 20,
-  //   background: '#fff',
-  //   borderRadius: '2px',
-  //   display: 'inline-block',
-  //   minHeight: '300px',
-  //   margin: '1rem',
-  //   position: 'relative',
-  //   minwidth: '300px',
-  //   boxShadow: '0 3px 6px rgba(0,0,0,0.16)',
-  //   justifySelf: 'center'
-  // }}
   render() {
     return ReactDOM.createPortal(
       <div
@@ -70,8 +47,15 @@ class Modal extends Component {
           position: 'relative',
           minwidth: '300px',
           boxShadow: '0 3px 6px rgba(0,0,0,0.16)',
-          justifySelf: 'center'
+          justifySelf: 'center',
+          top: '50%',
+          left: '50%',
+          right: 'auto',
+          bottom: 'auto',
+          marginRight: '-50%',
+          transform: 'translate(-50%, -50%)'
         }}
+
         >
           {this.props.children}
           <hr />

@@ -47,7 +47,6 @@ export const autoLogin = () => {
       if (data.errors) {
         alert(data.errors)
       } else {
-        console.log(data);
         dispatch({ type: 'LOGIN', payload: data.user })
       }
     })

@@ -39,3 +39,9 @@ export const itemShow = item => {
     item: item
   }
 }
+export const itemOwner = item => {
+  return {
+    type: 'SHOW_ITEM',
+    item: item
+  }
+}
