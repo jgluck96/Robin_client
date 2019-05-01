@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import ReactDOM from 'react-dom'
 import MobileBtn from './mobileBtn'
 import { connect } from 'react-redux'
+import { openLoginModal, openSignupModal } from '../actions/modal'
 import { logout } from '../actions/users'
 
 
@@ -11,6 +12,14 @@ class NavBar extends Component {
   logout = () => {
     localStorage.removeItem("token")
     this.props.logout()
+  }
+
+  openLogin = () => {
+    this.props.openLoginModal()
+  }
+
+  openSignup = () => {
+    this.props.openSignupModal()
   }
 
   render(){
@@ -61,15 +70,15 @@ class NavBar extends Component {
                       </React.Fragment>
                     :
                     <React.Fragment>
-                  <li className='nav-item'>
-                    <NavLink className="nav-link" to='/sign-in'>
+                  <li className='nav-item' onClick={this.openLogin}>
+                    <a className="nav-link" >
                       Log in
-                    </NavLink>
+                    </a>
                   </li>
-                  <li className='nav-item'>
-                    <NavLink className="nav-link" to='/sign-up'>
+                  <li className='nav-item' onClick={this.openSignup}>
+                    <a className="nav-link">
                       Sign up
-                    </NavLink>
+                    </a>
                   </li>
                   </React.Fragment>
 
@@ -89,7 +98,7 @@ class NavBar extends Component {
     }
   }
 
-export default connect(mapStateToProps, { logout })(NavBar)
+export default connect(mapStateToProps, { logout, openLoginModal, openSignupModal })(NavBar)
 
 
 

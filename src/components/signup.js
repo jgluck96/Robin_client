@@ -6,16 +6,7 @@ import {withRouter} from 'react-router'
 import {login} from '../actions/users'
 import Modal from './modal'
 
-const customStyles = {
-  content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
-  }
-};
+
 
 class Signup extends Component {
 
@@ -45,7 +36,7 @@ class Signup extends Component {
 
   render(){
     return(
-
+<div>
       <Modal>
         <form onSubmit={this.handleSubmit}>
           <input
@@ -75,7 +66,7 @@ class Signup extends Component {
           <button type='submit'>Sign up</button>
         </form>
       </Modal>
-
+</div>
     )
   }
 }
