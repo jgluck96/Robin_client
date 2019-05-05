@@ -34,14 +34,23 @@ export const addListing = (item, userId) => {
 }
 
 export const itemShow = item => {
-  return {
-    type: 'SHOW_ITEM',
-    item: item
+  return (dispatch) => {
+    fetch('http://localhost:3000/users')
+      .then(resp => resp.json())
+      .then(users => {
+        const foundUser = users.find(user => user.own_items.includes(user.own_items.find(ownItem => ownItem.item_id === item.id)))
+        dispatch({type: 'SHOW_ITEM_OWNER', payload: foundUser})
+      })
+      dispatch({type: 'SHOW_ITEM', item: item})
   }
 }
-export const itemOwner = item => {
-  return {
-    type: 'SHOW_ITEM',
-    item: item
-  }
-}
+// export const showItemOwner = item => {
+//   return (dispatch) => {
+//     fetch('http://localhost:3000/users')
+//       .then(resp => resp.json())
+//       .then(users => {
+//         const foundUser = users.find(user => user.own_items.includes(user.own_items.find(ownItem => ownItem.item_id === item.id)))
+//         dispatch({type:})
+//       })
+//   }
+// }

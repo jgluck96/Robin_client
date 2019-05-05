@@ -16,8 +16,6 @@ export const openLoginModal = () => {
     type: 'OPEN_LOGIN_MODAL',
     payload: true
   }
-  console.log(this);
-  // dispatch(closeSignupModal())
 
 }
 export const closeLoginModal = () => {
@@ -32,7 +30,7 @@ export const openSignupModal = () => {
     type: 'OPEN_SIGNUP_MODAL',
     payload: true
   }
-  // dispatch(closeLoginModal())
+
 }
 export const closeSignupModal = () => {
   return {

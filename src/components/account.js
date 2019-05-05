@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux';
 import {fetchRequests} from '../actions/requests'
 import {fetchWhatIWant} from '../actions/requests'
+import {autoLogin} from '../actions/users'
+import {openLoginModal} from '../actions/users'
 import RequestCard from './requestCard'
 import RentalCard from './rentalCard'
 import WhatIWantCard from './whatIWantCard'
@@ -15,22 +17,15 @@ class Account extends Component {
       this.props.fetchWhatIWant(this.props.user.id)
     }, 500)
   }
-// [{userObj: , itemObj:}, {userObj: , itemObj:}, {userObj: , itemObj:}]
-  // matchItemAndRequester = () => {
-  //   found = []
-  //   this.props.requests.forEach(request => {
-  //     const foundItem = this.props.request.items.find(item => {})
-  //   })
-  // }
 
 
   render(){
     const acceptedReqs = this.props.requests.filter(req => req.request.accepted === true)
     const newReqs = this.props.requests.filter(req => req.request.accepted === null)
     return(
-
-
       <div style={{margin: '300px'}}>
+
+      <p>Funds: ${this.props.user.funds}</p>
       <h1>my items</h1>
       requests:
       {newReqs.map(req => {
@@ -68,4 +63,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, {fetchRequests, fetchWhatIWant})(Account)
+export default connect(mapStateToProps, {fetchRequests, autoLogin, fetchWhatIWant})(Account)

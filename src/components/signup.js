@@ -13,7 +13,9 @@ class Signup extends Component {
   state = {
     name: '',
     email: '',
-    password: ''
+    password: '',
+    bio: '',
+    funds: 0.00
   }
 
   handleChange = (e) => {
@@ -29,7 +31,8 @@ class Signup extends Component {
     this.props.history.push('/')
     this.setState({
       email: '',
-      password: ''
+      password: '',
+      bio: ''
     })
 
   }
@@ -37,7 +40,7 @@ class Signup extends Component {
   render(){
     return(
 <div>
-      <Modal>
+
         <form onSubmit={this.handleSubmit}>
           <input
           placeholder='name'
@@ -45,6 +48,14 @@ class Signup extends Component {
           name='name'
           onChange={this.handleChange}
           value={this.state.name}
+          >
+          </input>
+          <input
+          placeholder='bio'
+          type="text"
+          name='bio'
+          onChange={this.handleChange}
+          value={this.state.bio}
           >
           </input>
           <input
@@ -65,7 +76,7 @@ class Signup extends Component {
           </input>
           <button type='submit'>Sign up</button>
         </form>
-      </Modal>
+
 </div>
     )
   }

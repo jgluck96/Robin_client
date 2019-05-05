@@ -41,7 +41,6 @@ class Login extends Component {
         if (data.errors) {
           alert(data.errors)
         } else {
-          console.log(data)
           localStorage.setItem('token', data.token)
           this.props.login(data.user)
         }

@@ -14,8 +14,18 @@ export const fetchRequests = (currentUserId) => {
             const foundItem = items.find(item => item.id === request.item_id)
             allArr.push({request: request, itemObj: foundItem, requesterObj: request.requester})
           })
-            dispatch({type: 'FETCH_REQUESTS', payload: allArr})
+          // console.log(JSON.parse(localStorage.getItem('request')))
+          dispatch({type: 'FETCH_REQUESTS', payload: allArr})
+            // if (JSON.parse(localStorage.getItem('requests')).length < allArr.length) {
+            //   //go thru allArr and find the ones that are new then dispatch to an action that sets the new ones
+            //   const newRequests = JSON.parse(localStorage.getItem('requests')).filter(req => !allArr.includes(req))
+            //   console.log(newRequests);
+            //   dispatch({type: 'SET_NEW_REQUESTS', payload: newRequests})
+            // } else {
+            //   localStorage.setItem('requests', allArr)
+            // }
         })
+
     })
   }
 }

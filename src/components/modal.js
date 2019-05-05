@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
-import { closeModal } from '../actions/modal'
+import { closeModal, closeSignupModal, closeLoginModal } from '../actions/modal'
 import {connect} from 'react-redux'
 
 
@@ -32,7 +32,8 @@ class Modal extends Component {
         maxWidth: '100%',
         height: '100%',
         maxHeight: '100%',
-        zIndex: '1010'
+        zIndex: '1010',
+        overflow: 'hidden'
       }}
       onClick={this.props.onClose}
       >
@@ -59,7 +60,13 @@ class Modal extends Component {
         >
           {this.props.children}
           <hr />
-          <button onClick={() => this.props.closeModal()}>x</button>
+          <button onClick={() => {
+            this.props.closeModal()
+            this.props.closeLoginModal()
+            this.props.closeSignupModal()
+            document.getElementById('root').setAttribute('class', '')
+          }
+            }>x</button>
         </div>
       </div>,
       portalRoot,
@@ -67,4 +74,4 @@ class Modal extends Component {
   }
 }
 
-export default connect(null, {closeModal})(Modal)
+export default connect(null, {closeModal, closeSignupModal, closeLoginModal})(Modal)

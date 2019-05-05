@@ -38,7 +38,8 @@ class ListItemForm extends Component {
           lng: data.Items[0].Longitude,
           value: this.state.value,
           rental_price: this.state.rental_price,
-          id: uuid()
+          city: this.state.city,
+          state: this.state.state
         }
         this.props.addListing(item, this.props.user.id)
         this.setState({

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import './App.css';
 import NavBar from './components/navBar'
 import { BrowserRouter as Router, Route, Link, Switch, withRouter } from "react-router-dom";
@@ -12,22 +13,39 @@ import LogIn from './components/login'
 import Modal from './components/modal'
 import Inbox from './components/inbox'
 import { autoLogin } from './actions/users'
+import { fetchRequests } from './actions/requests'
 import {connect} from 'react-redux'
+import { fetchMyRentals } from './actions/rentals'
+import { userGeo } from './actions/geolocation'
+
 
 class App extends Component {
 
   componentDidMount() {
+
+    navigator.geolocation.getCurrentPosition((position) => {
+      this.props.userGeo({lat: position.coords.latitude, lng: position.coords.longitude})
+    })
+
     if (localStorage.getItem('token')) {
       this.props.autoLogin()
+      setTimeout(() => {
+        this.props.fetchRequests(this.props.user.id)
+        this.props.fetchMyRentals(this.props.user.id)
+      }
+      , 1000)
     }
-
   }
+
+  // componentDidUpdate(){
+  //   console.log('in nav cdm');
+  // }
 
 
 
   render(){
     return (
-        <div>
+        <React.Fragment >
           <NavBar />
           <div>
             <Switch>
@@ -49,8 +67,17 @@ class App extends Component {
               :
               null
             }
+            {this.props.signupModal ?
+              <React.Fragment>
+              <Modal>
+                <SignUp />
+              </Modal>
+              </React.Fragment>
+              :
+              null
+            }
           </div>
-        </div>
+        </React.Fragment>
     )
   }
 }
@@ -59,8 +86,9 @@ const mapStateToProps = state => {
   return {
     modal: state.modal,
     loginModal: state.loginModal,
-    signupModal: state.signupModal
+    signupModal: state.signupModal,
+    user: state.user
   }
 }
 
-export default connect(mapStateToProps, { autoLogin })(App);
+export default connect(mapStateToProps, { autoLogin, fetchRequests, fetchMyRentals, userGeo })(App);

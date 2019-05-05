@@ -12,11 +12,11 @@ class Container extends React.Component {
     lng: ''
   }
 
-  componentDidMount() {
-    navigator.geolocation.getCurrentPosition((position) => {
-      this.setState({lat: position.coords.latitude, lng: position.coords.longitude})
-    })
-  }
+  // componentDidMount() {
+  //   navigator.geolocation.getCurrentPosition((position) => {
+  //     this.setState({lat: position.coords.latitude, lng: position.coords.longitude})
+  //   })
+  // }
 
 
   render() {
@@ -45,15 +45,17 @@ class Container extends React.Component {
       zoom={14}
       initialCenter={//change initial location to user's
       // lat/lng coordinates from their account(user table attributes)
-        this.props.items.length > 0 ?
-        {
-            lat: this.props.items[0].lat,
-            lng: this.props.items[0].lng
-        }
-        :
-        {	lat: 40.70746, lng:	-74.00432}
+        // this.props.items.length > 0 ?
+        // {
+        //     lat: this.props.items[0].lat,
+        //     lng: this.props.items[0].lng
+        // }
+        // :
+        // {	lat: 40.70746, lng:	-74.00432}
+        this.props.userGeo
       }
-        bounds={bounds}>
+        // bounds={bounds}
+        >
       {
         this.props.items.map(itemObj => {
           return (

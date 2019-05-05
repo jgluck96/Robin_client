@@ -5,9 +5,15 @@ import MobileBtn from './mobileBtn'
 import { connect } from 'react-redux'
 import { openLoginModal, openSignupModal } from '../actions/modal'
 import { logout } from '../actions/users'
+import { fetchMyRentals } from '../actions/rentals'
 
 
 class NavBar extends Component {
+  //
+  // getRentals = () => {
+  //
+  // }
+
 
   logout = () => {
     localStorage.removeItem("token")
@@ -16,15 +22,20 @@ class NavBar extends Component {
 
   openLogin = () => {
     this.props.openLoginModal()
+    document.getElementById('root').setAttribute('class', 'modal-overflow')
+
   }
 
   openSignup = () => {
     this.props.openSignupModal()
+    document.getElementById('root').setAttribute('class', 'modal-overflow')
+
   }
 
   render(){
     return(
-      <div>
+      <div onClick={() => this.props.fetchMyRentals(this.props.user.id)}>
+      <header className='header'>
         <nav className="navbar navbar-expand-lg fixed-top shadow navbar-light bg-white">
           <div className="container-fluid">
             <div>
@@ -54,11 +65,12 @@ class NavBar extends Component {
                       <React.Fragment>
                       <li className='nav-item'>
                         <NavLink className="nav-link" to='/inbox'>
-                          Messages
+                          Notifications
+                         <span style={this.props.expiringRentals > 0 ? {color: 'red'} : {color: 'white'}}>0</span>
                         </NavLink>
                       </li>
                       <li className='nav-item'>
-                        <NavLink id='docsDropdownMenuLink' className="nav-link dropdown-toggle" to='/account'>
+                        <NavLink className="nav-link" to='/account'>
                           Account
                         </NavLink>
                       </li>
@@ -86,6 +98,7 @@ class NavBar extends Component {
                   </ul>
                   </div>
         </nav>
+        </header>
       </div>
     )
   }
@@ -94,15 +107,10 @@ class NavBar extends Component {
   const mapStateToProps = state => {
     console.log(state);
     return {
-      user: state.user
+      user: state.user,
+      requests: state.requests,
+      expiringRentals: state.expiringRentals
     }
   }
 
-export default connect(mapStateToProps, { logout, openLoginModal, openSignupModal })(NavBar)
-
-
-
-
-
-
-// <MobileBtn pageWrapId={"page-wrap"}/></div>
+export default connect(mapStateToProps, { logout, openLoginModal, openSignupModal, fetchMyRentals })(NavBar)

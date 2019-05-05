@@ -6,6 +6,7 @@ import {requestDenied} from '../actions/requests'
 import {requestAccepted} from '../actions/requests'
 import {fetchRequests} from '../actions/requests'
 import {fetchWhatIWant} from '../actions/requests'
+import {login} from '../actions/users'
 
 import {connect} from 'react-redux'
 
@@ -27,10 +28,13 @@ class RequestCard extends Component {
         item_id: findRequest.itemObj.id,
         date_start: findRequest.request.date_start,
         date_end: findRequest.request.date_end,
+        date_start_server: findRequest.request.date_start_server,
+        date_end_server: findRequest.request.date_end_server,
         days_rented: findRequest.request.days_rented,
         subtotal: findRequest.request.subtotal,
         service_fee: findRequest.request.service_fee,
-        total_price: findRequest.request.total_price
+        total_price: findRequest.request.total_price,
+        status: null
       })
     })
     .then(resp => resp.json())
@@ -38,6 +42,20 @@ class RequestCard extends Component {
     this.props.requestAccepted(findRequest.request.id, this.props.user.id)
     )
     .then(this.props.fetchWhatIWant(this.props.user.id))
+    .then(() => {
+      console.log(this.props.user.funds + findRequest.request.subtotal)
+      fetch(`http://localhost:3000/users/${this.props.user.id}`,{
+        method: 'PATCH',
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          funds: this.props.user.funds + findRequest.request.subtotal
+        })
+      })
+      .then(resp => resp.json())
+      .then(user => this.props.login(user))
+    })
   }
 
   render(){
@@ -68,4 +86,4 @@ class RequestCard extends Component {
     }
   }
 
-export default connect(mapStateToProps, {requestDenied, requestAccepted, fetchRequests, fetchWhatIWant})(RequestCard)
+export default connect(mapStateToProps, {requestDenied, login, requestAccepted, fetchRequests, fetchWhatIWant})(RequestCard)
