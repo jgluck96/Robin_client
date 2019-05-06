@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { login } from '../actions/users'
 import { connect } from 'react-redux'
-import Modal from './modal';
+// import Modal from './modal';
 import {withRouter} from 'react-router'
 
 

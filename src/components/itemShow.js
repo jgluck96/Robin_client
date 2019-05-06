@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import ShowRR from './itemShowRR'
 import ShowDesc from './itemShowDesc'
 import {itemShow} from '../actions/items'
+import MyItemsSlider from './myItemsSlider'
 
 
 class ItemShow extends Component {
@@ -19,16 +20,17 @@ class ItemShow extends Component {
       <div className='row'>
       <ShowDesc />
       <ShowRR />
-
+      <MyItemsSlider items={this.props.showItemOwnerItems}/>
       </div>
     )
   }
 }
 
   const mapStateToProps = state => {
-    console.log(state);
     return {
-      item: state.showItem
+      item: state.showItem,
+      showItemOwner: state.showItemOwner,
+      showItemOwnerItems: state.showItemOwnerItems
     }
   }
 

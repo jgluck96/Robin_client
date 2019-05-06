@@ -38,20 +38,14 @@ class Container extends React.Component {
     if (!this.props.loaded) {
       return <div>Loading...</div>
     }
-    console.log(this.state);
     return (
       <div style={style}>
       <Map google={this.props.google}
       zoom={14}
-      initialCenter={//change initial location to user's
-      // lat/lng coordinates from their account(user table attributes)
-        // this.props.items.length > 0 ?
-        // {
-        //     lat: this.props.items[0].lat,
-        //     lng: this.props.items[0].lng
-        // }
-        // :
-        // {	lat: 40.70746, lng:	-74.00432}
+      initialCenter={
+        this.props.searchResults ?
+        null
+        :
         this.props.userGeo
       }
         // bounds={bounds}
@@ -63,7 +57,11 @@ class Container extends React.Component {
           key={itemObj.id}
           onClick={this.onMarkerClick}
           name={'Current location'}
+          markerWithLabel={window.MarkerWithLabel}
+          labelClass='leaflet-tooltip map-custom-tooltip leaflet-zoom-animated leaflet-tooltip-top leaflet-clickable'
+          labelContent={`<div class="leaflet-tooltip map-custom-tooltip leaflet-zoom-animated leaflet-tooltip-top leaflet-clickable"><span>$${itemObj.rental_price}</span></div>`}
           position={{lat: itemObj.lat, lng: itemObj.lng}}
+
           />
           )
         })

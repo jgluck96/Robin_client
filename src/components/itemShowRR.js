@@ -20,7 +20,6 @@ class ItemShowRR extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     item: state.showItem
   }

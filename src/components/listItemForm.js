@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { addListing } from '../actions/items'
-import uuid from 'uuid';
+import {withRouter} from 'react-router'
+// import uuid from 'uuid';
 
 class ListItemForm extends Component {
 
@@ -15,7 +16,9 @@ class ListItemForm extends Component {
     zipcode: '',
     country: '',
     value: '',
-    rental_price: ''
+    rental_price: '',
+    listPage: 1,
+    loadValue: 33.3333
   }
 
   changeHandler = e => {
@@ -54,31 +57,155 @@ class ListItemForm extends Component {
           value: '',
           rental_price: ''
         })
+        this.props.history.push('/listing-uploaded')
     })
+
+  }
+
+  nextPage = () => {
+    this.setState((prevState) => ({
+      listPage: prevState.listPage + 1,
+      loadValue: prevState.loadValue + 33.3333
+    }))
+  }
+  prevPage = () => {
+    this.setState((prevState) => ({
+      listPage: prevState.listPage - 1,
+      loadValue: prevState.loadValue - 33.3333
+    }))
   }
 
   render(){
     return(
-      <div style={{margin:'100px'}}>
-        <form>
-        <input onChange={this.changeHandler} name='title' value={this.state.title} placeholder='title'/>
-        <textarea onChange={this.changeHandler} name='description' value={this.state.description} placeholder='description'/>
-        <div>
-          <select onChange={this.changeHandler} name="category" title="Categories">
-            <option value>Categories..</option>
-            <option value="Furniture">Furniture</option>
-            <option value="Sports & Outdoors">Sports & Outdoors</option>
-          </select>
+      <div>
+      <div style={{height: '8px', top: '71px'}} className="progress rounded-0 sticky-top">
+        <div style={{width: `${this.state.loadValue}%`}} aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" className="progress-bar">
         </div>
-        <input onChange={this.changeHandler} name='value' value={this.state.value} type="number" placeholder='value'/>
-        <input onChange={this.changeHandler} name='rental_price' value={this.state.rental_price} type="number" placeholder='$$/day'/>
-        <input onChange={this.changeHandler} name='streetAddress' value={this.state.streetAddress} placeholder='street address'/>
-        <input onChange={this.changeHandler} name='city' value={this.state.city} placeholder='city'/>
-        <input onChange={this.changeHandler} name='state' value={this.state.state} placeholder='state'/>
-        <input onChange={this.changeHandler} name='zipcode' value={this.state.zipcode} placeholder='zipcode'/>
-        <input onChange={this.changeHandler} name='country' value={this.state.country} placeholder='country'/>
-        <button type='submit' onClick={this.handleSubmit}>List item</button>
-        </form>
+      </div>
+        <section className="py-5" style={{marginTop: '5%'}}>
+          <div className="container">
+            <p className="subtitle text-primary">Add new listing</p>
+            <h1 className="h2 mb-5"> Basic information <span class="text-muted float-right">Step {this.state.listPage}</span></h1>
+            <form>
+            {this.state.listPage === 1 ?
+              <div>
+              <div className="row form-block">
+
+                <div class="col-lg-4">
+                  <h4>Basic</h4>
+                  <p class="text-muted text-sm">Some basic info to show others what your listing it about.</p>
+                </div>
+                <div class="col-lg-7 ml-auto">
+                  <div class="form-group">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Listing title</label>
+                    <input onChange={this.changeHandler} id="form_name" className="form-control" name='title' value={this.state.title} placeholder='title'/>
+                  </div>
+                  <div class="form-group mb-5">
+                    <label  class="form-label">Item description</label>
+                    <textarea id="form_description" className="form-control" onChange={this.changeHandler} name='description' value={this.state.description} placeholder='description'/>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Category</label>
+                      <div className="btn btn-selectpicker form-control">
+                      <select onChange={this.changeHandler} id="form_type" className="btn dropdown-toggle bs-placeholder form-control" name="category" title="Categories">
+                        <option value></option>
+                        <option value="Furniture">Furniture</option>
+                        <option value="Sports & Outdoors">Sports & Outdoors</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="row form-block flex-column flex-sm-row">
+                  <div class="col text-center text-sm-right">
+                    <div onClick={this.nextPage} class="btn btn-primary px-3">Next step<i class="fa-chevron-right fa ml-2"></i>
+                    </div>
+                  </div>
+              </div>
+            </div>
+              :
+              this.state.listPage === 2 ?
+              <div>
+                <div className="row form-block">
+                    <div class="col-lg-4">
+                      <h4>Let's talk money</h4>
+                      <p class="text-muted text-sm">What you value and how much you'd like to rent out the item per day.</p>
+                    </div>
+
+                    <div class="col-lg-7 ml-auto">
+                    <div class="form-group">
+                      <label class="form-label">Value</label>
+                      <input onChange={this.changeHandler} name='value' id="form_name" className="form-control" value={this.state.value} type="number" placeholder='value'/>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Rental price</label>
+                      <input onChange={this.changeHandler} name='rental_price' id="form_name" className="form-control" value={this.state.rental_price} type="number" placeholder='$$/day'/>
+                    </div>
+                  </div>
+                </div>
+                  <div className="row form-block flex-column flex-sm-row">
+                    <div class="col text-center text-sm-left">
+                      <div onClick={this.prevPage} class="btn btn-link text-muted"> <i class="fa-chevron-left fa mr-2"></i>Back</div>
+                    </div>
+                      <div class="col text-center text-sm-right">
+                        <div onClick={this.nextPage} class="btn btn-primary px-3">Next step<i class="fa-chevron-right fa ml-2"></i>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+              :
+              <div>
+                <div className="row form-block">
+                  <div class="col-lg-4">
+                    <h4>Location</h4>
+                    <p class="text-muted text-sm">Where the item is located.</p>
+                  </div>
+
+                  <div class="col-lg-7 ml-auto">
+                    <div class="form-group">
+                      <label class="form-label">Street address</label>
+                      <input onChange={this.changeHandler} id="form_street" className="form-control" name='streetAddress' value={this.state.streetAddress} placeholder='street address'/>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-6">
+                        <div class="form-group">
+                          <label class="form-label">City</label>
+                          <input onChange={this.changeHandler} name='city' className="form-control" value={this.state.city} placeholder='city'/>
+                        </div>
+                      </div>
+                      <div className="col-md-6">
+                        <div class="form-group">
+                          <label class="form-label">State</label>
+                          <input onChange={this.changeHandler} name='state' className="form-control" value={this.state.state} placeholder='state'/>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Zipcode</label>
+                      <input onChange={this.changeHandler} name='zipcode' className="form-control" value={this.state.zipcode} placeholder='zipcode'/>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Country</label>
+                      <input onChange={this.changeHandler} name='country' className="form-control" value={this.state.country} placeholder='country'/>
+                    </div>
+                  </div>
+                </div>
+                <div className="row form-block flex-column flex-sm-row">
+                  <div class="col text-center text-sm-left">
+                    <div onClick={this.prevPage} class="btn btn-link text-muted"> <i class="fa-chevron-left fa mr-2"></i>Back
+                    </div>
+                  </div>
+                  <div class="col text-center text-sm-right">
+                    <button class="btn btn-primary px-3" type='submit' onClick={this.handleSubmit}>List item</button>
+                  </div>
+                </div>
+              </div>
+            }
+            </form>
+          </div>
+        </section>
       </div>
     )
   }
@@ -90,4 +217,4 @@ class ListItemForm extends Component {
     }
   }
 
-export default connect(mapStateToProps, {addListing})(ListItemForm)
+export default withRouter(connect(mapStateToProps, {addListing})(ListItemForm))

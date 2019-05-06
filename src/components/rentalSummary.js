@@ -32,7 +32,6 @@ class RentalTotal extends Component {
       startDate: date,
       formattedStart: startDate,
       endDate: '',
-      days: '',
       days: 0,
       subtotal: '0.00',
       service_fee: '0.00',
@@ -117,7 +116,7 @@ class RentalTotal extends Component {
 
 
   getDateArray = (start, end) => {
-      const arr = new Array();
+      const arr = [];
       const dt = new Date(start);
       while (dt <= end) {
           arr.push(new Date(dt));
@@ -227,7 +226,6 @@ class RentalTotal extends Component {
 }
 
   const mapStateToProps = state => {
-console.log(state);
     return {
       item: state.showItem,
       items: state.items,

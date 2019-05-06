@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
-import ReactDOM from 'react-dom'
+// import ReactDOM from 'react-dom'
 import {signmeUp} from '../actions/users'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router'
-import {login} from '../actions/users'
-import Modal from './modal'
+// import {login} from '../actions/users'
+// import Modal from './modal'
 
 
 

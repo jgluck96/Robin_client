@@ -1,6 +1,8 @@
-export default (state = [], action) => {
+
+
+export default (state= [], action) => {
   switch (action.type) {
-    case 'FETCH_ITEMS':
+    case 'SHOW_ITEM_OWNER_ITEMS':
       return action.payload
 
     default:

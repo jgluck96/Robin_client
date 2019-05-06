@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 import './App.css';
 import NavBar from './components/navBar'
 import { BrowserRouter as Router, Route, Link, Switch, withRouter } from "react-router-dom";
@@ -11,6 +11,7 @@ import AllItems from './pages/browseAll'
 import SignUp from './components/signup'
 import LogIn from './components/login'
 import Modal from './components/modal'
+import ListingUploaded from './components/listingUploaded'
 import Inbox from './components/inbox'
 import { autoLogin } from './actions/users'
 import { fetchRequests } from './actions/requests'
@@ -29,11 +30,10 @@ class App extends Component {
 
     if (localStorage.getItem('token')) {
       this.props.autoLogin()
-      setTimeout(() => {
+      if (this.props.user) {
         this.props.fetchRequests(this.props.user.id)
         this.props.fetchMyRentals(this.props.user.id)
       }
-      , 1000)
     }
   }
 
@@ -56,6 +56,7 @@ class App extends Component {
               <Route exact path='/log-out' component={Home} />
               <Route exact path='/item-show' component={ItemShowPage} />
               <Route exact path='/account' component={AccountPage} />
+              <Route exact path='/listing-uploaded' component={ListingUploaded} />
               <Route exact path='/inbox' component={Inbox} />
             </Switch>
             {this.props.loginModal ?

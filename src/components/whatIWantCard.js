@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
-import {withRouter} from 'react-router'
-import {itemShow} from '../actions/items'
+// import {withRouter} from 'react-router'
+// import {itemShow} from '../actions/items'
 
 import {connect} from 'react-redux'
-import RentalTimer from './rentalTimer'
+// import RentalTimer from './rentalTimer'
 
 
 class WhatIWantCard extends Component {

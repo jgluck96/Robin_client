@@ -7,12 +7,11 @@ import loginModal from './loginModal'
 import signupModal from './signupModal'
 import requests from './requestReducer'
 import whatIWant from './whatIWant'
-import acceptedRequests from './acceptedRequest'
-import deniedRequests from './deniedRequest'
 import expiringRentals from './expiringRentals'
 import myRentals from './myRentals'
 import userGeo from './userGeo'
 import showItemOwner from './showItemOwner'
+import showItemOwnerItems from './showItemOwnersItems'
 
 
 
@@ -26,6 +25,7 @@ export default combineReducers({
   loginModal,
   signupModal,
   expiringRentals,
+  showItemOwnerItems,
   myRentals,
   userGeo,
   showItemOwner

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import Message from './message'
 import {connect} from 'react-redux'
-import { ActionCableConsumer } from 'react-actioncable-provider'
+// import { ActionCableConsumer } from 'react-actioncable-provider'
 
 // <ActionCableConsumer
 // channel={{channel: 'FeedChannel'}}

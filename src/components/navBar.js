@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { NavLink } from "react-router-dom";
-import ReactDOM from 'react-dom'
-import MobileBtn from './mobileBtn'
+// import ReactDOM from 'react-dom'
+// import MobileBtn from './mobileBtn'
 import { connect } from 'react-redux'
 import { openLoginModal, openSignupModal } from '../actions/modal'
 import { logout } from '../actions/users'
@@ -34,7 +34,7 @@ class NavBar extends Component {
 
   render(){
     return(
-      <div onClick={() => this.props.fetchMyRentals(this.props.user.id)}>
+      <div>
       <header className='header'>
         <nav className="navbar navbar-expand-lg fixed-top shadow navbar-light bg-white">
           <div className="container-fluid">
@@ -83,14 +83,14 @@ class NavBar extends Component {
                     :
                     <React.Fragment>
                   <li className='nav-item' onClick={this.openLogin}>
-                    <a className="nav-link" >
+                    <div style={{cursor: 'pointer'}} className="nav-link" >
                       Log in
-                    </a>
+                    </div>
                   </li>
                   <li className='nav-item' onClick={this.openSignup}>
-                    <a className="nav-link">
+                    <div style={{cursor: 'pointer'}} className="nav-link">
                       Sign up
-                    </a>
+                    </div>
                   </li>
                   </React.Fragment>
 
@@ -105,7 +105,6 @@ class NavBar extends Component {
 }
 
   const mapStateToProps = state => {
-    console.log(state);
     return {
       user: state.user,
       requests: state.requests,

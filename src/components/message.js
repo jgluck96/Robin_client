@@ -1,11 +1,10 @@
 import React, {Component} from 'react'
-import {itemShow} from '../actions/items'
+// import {itemShow} from '../actions/items'
 
 class Message extends Component {
 
   show = item => {
     localStorage.setItem("currentItem", JSON.stringify(item))
-    this.props.itemShow(item)
   }
 
   render(){
@@ -17,10 +16,6 @@ class Message extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    requests: state.requests
-  }
-}
+
 
 export default Message

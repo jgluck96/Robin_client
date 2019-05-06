@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
-import {withRouter} from 'react-router'
-import {itemShow} from '../actions/items'
+// import {withRouter} from 'react-router'
+// import {itemShow} from '../actions/items'
 
 import {requestDenied} from '../actions/requests'
 import {requestAccepted} from '../actions/requests'

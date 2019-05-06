@@ -31,7 +31,6 @@ export const fetchRequests = (currentUserId) => {
 }
 
 export const fetchWhatIWant = (currentUserId) => {
-  console.log('here');
   return (dispatch) => {
     fetch('http://localhost:3000/requests')
     .then(res => res.json())

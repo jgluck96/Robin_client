@@ -21,6 +21,9 @@ export const addListing = (item, userId) => {
     })
     .then(resp => resp.json())
     .then(itemObj => {
+      localStorage.setItem("currentItem", JSON.stringify(itemObj))
+      dispatch({type: 'SHOW_ITEM', item: item})
+
       console.log(userId);
       fetch('http://localhost:3000/own_items',{
         method: 'POST',
@@ -40,8 +43,19 @@ export const itemShow = item => {
       .then(users => {
         const foundUser = users.find(user => user.own_items.includes(user.own_items.find(ownItem => ownItem.item_id === item.id)))
         dispatch({type: 'SHOW_ITEM_OWNER', payload: foundUser})
+        dispatch({type: 'SHOW_ITEM', item: item})
+        fetch('http://localhost:3000/items')
+          .then(resp => resp.json())
+          .then(items => {
+            // should
+            const ownerItems = []
+            foundUser.own_items.forEach(ownItem => {
+              // ownerItems.push()
+                ownerItems.push(items.find(item => item.id === ownItem.item_id))
+            })
+            dispatch({type: 'SHOW_ITEM_OWNER_ITEMS', payload: ownerItems.filter(ownerItem => item.id !== ownerItem.id)})
+          })
       })
-      dispatch({type: 'SHOW_ITEM', item: item})
   }
 }
 // export const showItemOwner = item => {

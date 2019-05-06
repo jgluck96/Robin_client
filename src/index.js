@@ -8,7 +8,7 @@ import { createStore, applyMiddleware } from 'redux'
 import rootReducer from './reducers/index'
 import { BrowserRouter } from "react-router-dom";
 import thunk from 'redux-thunk'
-import {ActionCableProvider} from 'react-actioncable-provider'
+// import {ActionCableProvider} from 'react-actioncable-provider'
 
 
 let store = createStore(rootReducer, applyMiddleware(thunk))

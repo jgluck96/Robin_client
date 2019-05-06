@@ -1,9 +1,11 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux';
+import ItemReview from './itemReviews';
 
 
 class ItemShowDesc extends Component {
   render(){
+    console.log(this.props.item);
     return(
 
       <div className='col-lg-8'>
@@ -20,25 +22,27 @@ class ItemShowDesc extends Component {
               <div className="media-body">
                 <p> <span className="text-muted text-uppercase text-sm">Owned by </span><strong>{this.props.showItemOwner.name}</strong></p>
                 <p className="text-muted text-sm mb-2">{this.props.showItemOwner.bio}</p>
-                <p className="text-sm"><a href="#">See {this.props.showItemOwner.name}'s profile<i className="fa fa-long-arrow-alt-right ml-2"></i></a></p>
+                <p className="text-sm"><a href="/">See {this.props.showItemOwner.name}'s profile<i className="fa fa-long-arrow-alt-right ml-2"></i></a></p>
               </div>
             </div>
           </div>
-          <div class="text-block">
-            <p class="subtitle text-sm text-primary">Reviews</p>
-            <h5 class="mb-4">Reviews </h5>
-            <div class="media d-block d-sm-flex review">
-              <div class="text-md-center mr-4 mr-xl-5"><img src="https://d19m59y37dris4.cloudfront.net/directory/1-1/img/avatar/avatar-4.jpg" alt="Jabba Hut" class="d-block avatar avatar-xl p-2 mb-2" /><span class="text-uppercase text-muted text-sm">Dec 2018</span></div>
-              <div class="media-body">
-                <h6 class="mt-2 mb-1">Jabba Hut</h6>
-                <div class="mb-2"><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i>
-                </div>
-                <p class="text-muted text-sm">Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame.</p>
+          <div className="text-block">
+            <p className="subtitle text-sm text-primary">Reviews</p>
+            <h5 className="mb-4">Reviews </h5>
+            {this.props.item.reviews.length > 0 ?
+              <div>
+              {this.props.item.reviews.map(review => {
+                console.log(review);
+                return <ItemReview review={review} userReview={review.user}/>
+              })}
+              <div className="py-5">
+                <button type="button" data-toggle="collapse" data-target="#leaveReview" aria-expanded="false" aria-controls="leaveReview" className="btn btn-outline-primary">See All Reviews</button>
               </div>
-            </div>
-            <div class="py-5">
-              <button type="button" data-toggle="collapse" data-target="#leaveReview" aria-expanded="false" aria-controls="leaveReview" class="btn btn-outline-primary">See All Reviews</button>
-            </div>
+              </div>
+              :
+              <h5 className="text-muted text-uppercase mb-4">Be the first to rent and review!</h5>
+            }
+            <hr />
           </div>
         </div>
       </div>
@@ -47,7 +51,6 @@ class ItemShowDesc extends Component {
 }
 
   const mapStateToProps = state => {
-    console.log(state);
     return {
       item: state.showItem,
       showItemOwner: state.showItemOwner
