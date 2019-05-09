@@ -10,3 +10,16 @@ export const fetchMyRentals = (currentUserId) => {
     })
   }
 }
+
+export const clearMyRentals = () => {
+  return {
+      type: 'MY_RENTALS',
+      payload: []
+  }
+}
+export const clearExpiringRentals = () => {
+  return {
+      type: 'EXPIRING_RENTALS',
+      payload: []
+  }
+}

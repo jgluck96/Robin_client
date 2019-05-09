@@ -34,7 +34,8 @@ class RequestCard extends Component {
         subtotal: findRequest.request.subtotal,
         service_fee: findRequest.request.service_fee,
         total_price: findRequest.request.total_price,
-        status: null
+        status: null,
+        read: null
       })
     })
     .then(resp => resp.json())
@@ -64,16 +65,18 @@ class RequestCard extends Component {
     return(
 
       <div className="col-sm-6 mb-5">
-        <div className="card h-100 border-0 shadow">
-          <h3>Requested item: {this.props.item.title}</h3>
-          <p>Requested by: {this.props.requester.name}</p>
+        <div style={{width: '200%'}} className="card h-100 border-0 shadow">
+          <h5>Requested item: {this.props.item.title}</h5>
+          <p>Requested by: <span style={{float: 'right'}}>{this.props.requester.name}</span></p>
+          <div style={{marginLeft: '10px'}} className="row">
+            <button style={{width: '20%', margin: '5px'}} className="btn btn-primary" onClick={this.submitRental}>Accept</button>
+            <button style={{margin: '5px', backgroundColor: 'grey', color: 'white', width: '20%'}} className="btn" onClick={() => {
+              this.props.requestDenied(findRequest.request.id, this.props.user.id)
+              setTimeout(() => this.props.fetchWhatIWant(this.props.user.id), 500)
+              }
+            }>Deny</button>
+          </div>
         </div>
-        <button onClick={this.submitRental}>Accept</button>
-        <button onClick={() => {
-         this.props.requestDenied(findRequest.request.id, this.props.user.id)
-         setTimeout(() => this.props.fetchWhatIWant(this.props.user.id), 500)
-          }
-        }>Deny</button>
       </div>
     )
   }

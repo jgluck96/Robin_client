@@ -10,7 +10,7 @@ export const fetchItems = () => {
   }
 }
 
-export const addListing = (item, userId) => {
+export const addListing = (item, userId, photos) => {
   return (dispatch) => {
     fetch('http://localhost:3000/items', {
       method: 'POST',
@@ -22,7 +22,7 @@ export const addListing = (item, userId) => {
     .then(resp => resp.json())
     .then(itemObj => {
       localStorage.setItem("currentItem", JSON.stringify(itemObj))
-      dispatch({type: 'SHOW_ITEM', item: item})
+      dispatch({type: 'SHOW_ITEM', item: itemObj})
 
       console.log(userId);
       fetch('http://localhost:3000/own_items',{
@@ -31,6 +31,13 @@ export const addListing = (item, userId) => {
           'content-type' : 'application/json'
         },
         body: JSON.stringify({user_id: userId, item_id: itemObj.id})
+      })
+      fetch('http://localhost:3000/images', {
+        method: 'POST',
+        headers: {
+          'content-type' : 'application/json'
+        },
+        body: JSON.stringify({photos: photos, item_id: itemObj.id})
       })
     })
   }

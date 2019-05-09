@@ -15,10 +15,10 @@ class RentalCard extends Component {
 render(){
   return(
     <div className="col-sm-6 mb-5">
-      <div className="card h-100 border-0 shadow">
+      <div style={{width: '200%'}} className="card h-100 border-0 shadow">
         <h3>Requested item: {this.props.item.title}</h3>
-        <p>Requested by: {this.props.requester.name}</p>
-        <div>Time left: {new Date(this.props.request.request.date_start) <= new Date() ? (<RentalTimer endDate={this.props.request.request.date_end} id={this.props.request.request.id}/>) : 'Not Started'}</div>
+        <p>Requested by: <span style={{float: 'right'}}>{this.props.requester.name}</span></p>
+        <div>Time left: <span style={{float: 'right'}}>{new Date(this.props.request.request.date_start) <= new Date() ? (<RentalTimer endDate={this.props.request.request.date_end} id={this.props.request.request.id}/>) : 'Not Started'}</span></div>
       </div>
     </div>
   )

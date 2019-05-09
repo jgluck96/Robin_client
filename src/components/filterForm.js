@@ -46,7 +46,7 @@ class FilterForm extends Component {
             </div>
           <div className="row">
             <div className="col-sm-6 mb-4 order-2 order-sm-1">
-              <button type="submit" className="btn btn-primary"> <i className="fas fa-search mr-1"></i>Search</button>
+              <button type="submit" className="btn btn-primary" style={{marginTop: '30px'}}> <i className="fas fa-search mr-1"></i>Search</button>
             </div>
           </div>
         </form>

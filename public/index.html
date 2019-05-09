@@ -5,6 +5,23 @@
     <link rel="stylesheet" type="text/css" charset="UTF-8" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
 
+      <script>
+        UPLOADCARE_PUBLIC_KEY = '88f2934619d620139108';
+        UPLOADCARE_TABS = 'file camera url facebook instagram';
+        UPLOADCARE_EFFECTS = 'crop';
+        UPLOADCARE_IMAGES_ONLY = true;
+        UPLOADCARE_PREVIEW_STEP = true;
+        UPLOADCARE_CLEARABLE = true;
+      </script>
+
+      <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+      <script src="https://ucarecdn.com/libs/widget-tab-effects/1.x/uploadcare.tab-effects.js"></script>
+
+      <script>
+        uploadcare.registerTab('preview', uploadcareTabEffects)
+      </script>
+
+
     <!-- icons -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/solid.css" integrity="sha384-TbilV5Lbhlwdyc4RuIV/JhD8NR+BfMrvz4BL5QFa2we1hQu6wvREr3v6XSRfCTRp" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/regular.css" integrity="sha384-avJt9MoJH2rB4PKRsJRHZv7yiFZn8LrnXuzvmZoD3fh1aL6aM6s0BBcnCvBe6XSD" crossorigin="anonymous">

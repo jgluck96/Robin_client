@@ -5,19 +5,53 @@ import { NavLink } from "react-router-dom";
 import { connect } from 'react-redux'
 import { openLoginModal, openSignupModal } from '../actions/modal'
 import { logout } from '../actions/users'
-import { fetchMyRentals } from '../actions/rentals'
+import { fetchMyRentals, clearExpiringRentals, clearMyRentals } from '../actions/rentals'
+import { clearWhatIWantRentals, clearRequests } from '../actions/requests'
+import { notif, clearNotifs } from '../actions/notif'
 
 
 class NavBar extends Component {
+
+  // state = {
+  //   falseReadRentals: [],
+  //   falseReadRequests: [],
+  //   falseReadAndExpiredRentals: []
+  // }
+  // componentDidMount() {
+  //   if (localStorage.getItem('token')) {
+  //     const falseReadRentals = this.props.rentals.filter(rental => rental.read === false)
+  //     const falseReadAndExpiredRentals = this.props.rentals.filter(rental => rental.read === false && rental.status === 'expired')
+  //     const falseReadRequests = this.props.requests.filter(req => req.request.read === false)
+  //     console.log(falseReadRentals, falseReadRequests, falseReadAndExpiredRentals);
+  //     this.setState({
+  //       falseReadRentals: falseReadRentals,
+  //       falseReadRequests: falseReadAndExpiredRentals,
+  //       falseReadAndExpiredRentals: falseReadRequests
+  //     })
   //
-  // getRentals = () => {
-  //
+  //   }
   // }
 
+  componentDidUpdate(prevProps) {
+    if(prevProps.requests !== this.props.requests){
+      const falseReadAndExpiringRentals = this.props.rentals.filter(rental => rental.read === false && rental.status === 'expiring')
+      const falseReadAndExpiredRentals = this.props.rentals.filter(rental => rental.read === false && rental.status === 'expired')
+      const falseReadRequests = this.props.requests.filter(req => req.request.read === false)
+      const falseWhatIWant = this.props.whatIWant.filter(whatIWant => whatIWant.request.read === false && whatIWant.request.accepted !== null)
+
+      this.props.notif(falseReadAndExpiringRentals, falseReadRequests, falseReadAndExpiredRentals, falseWhatIWant)
+
+    }
+  }
 
   logout = () => {
     localStorage.removeItem("token")
     this.props.logout()
+    this.props.clearNotifs()
+    this.props.clearExpiringRentals()
+    this.props.clearMyRentals()
+    this.props.clearWhatIWantRentals()
+    this.props.clearRequests()
   }
 
   openLogin = () => {
@@ -32,7 +66,30 @@ class NavBar extends Component {
 
   }
 
+  checkFalse() {
+    const whatIWant = this.props.whatIWant.map(whatIWant => {
+      if (!whatIWant.request.read) {
+        return whatIWant
+      }
+    })
+
+    if (this.props.notifs) {
+      if (this.props.notifs.falseWhatIWant.length > 0 || this.props.notifs.falseReadAndExpiredRentals.length > 0 || this.props.notifs.falseReadRequests.length > 0 || this.props.notifs.falseReadRentals.length > 0) {
+          return 'dot'
+        } else {
+            return ''
+          }
+
+
+    }
+  }
+
+  // patchToTrue = () => {
+  //
+  // }
+
   render(){
+    console.log("State in Render", this.props)
     return(
       <div>
       <header className='header'>
@@ -63,13 +120,13 @@ class NavBar extends Component {
                     </li>
                     {this.props.user ?
                       <React.Fragment>
-                      <li className='nav-item'>
+                      <li className='nav-item' onClick={() => window.location.reload()}>
                         <NavLink className="nav-link" to='/inbox'>
                           Notifications
-                         <span style={this.props.expiringRentals > 0 ? {color: 'red'} : {color: 'white'}}>0</span>
+                         <span className={this.checkFalse()}></span>
                         </NavLink>
                       </li>
-                      <li className='nav-item'>
+                      <li className='nav-item' onClick={() => window.location.reload()}>
                         <NavLink className="nav-link" to='/account'>
                           Account
                         </NavLink>
@@ -97,9 +154,9 @@ class NavBar extends Component {
                     }
                   </ul>
                   </div>
-        </nav>
-        </header>
-      </div>
+                </nav>
+                </header>
+              </div>
     )
   }
 }
@@ -108,8 +165,11 @@ class NavBar extends Component {
     return {
       user: state.user,
       requests: state.requests,
-      expiringRentals: state.expiringRentals
+      rentals: state.myRentals,
+      expiringRentals: state.expiringRentals,
+      notifs: state.falseNotifs,
+      whatIWant: state.whatIWant
     }
   }
 
-export default connect(mapStateToProps, { logout, openLoginModal, openSignupModal, fetchMyRentals })(NavBar)
+export default connect(mapStateToProps, { logout, openLoginModal, clearExpiringRentals, clearMyRentals, clearNotifs, openSignupModal, fetchMyRentals, notif, clearWhatIWantRentals, clearRequests })(NavBar)

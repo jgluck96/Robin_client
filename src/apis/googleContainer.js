@@ -20,7 +20,7 @@ class Container extends React.Component {
 
 
   render() {
-
+console.log(this.props.google);
     const points = this.props.items.map(itemObj=> {
       return { lat: itemObj.lat, lng: itemObj.lng }
     })
@@ -55,14 +55,21 @@ class Container extends React.Component {
           return (
           <Marker
           key={itemObj.id}
+          title={'test'}
           onClick={this.onMarkerClick}
           name={'Current location'}
           markerWithLabel={window.MarkerWithLabel}
-          labelClass='leaflet-tooltip map-custom-tooltip leaflet-zoom-animated leaflet-tooltip-top leaflet-clickable'
-          labelContent={`<div class="leaflet-tooltip map-custom-tooltip leaflet-zoom-animated leaflet-tooltip-top leaflet-clickable"><span>$${itemObj.rental_price}</span></div>`}
           position={{lat: itemObj.lat, lng: itemObj.lng}}
+          >
 
-          />
+          <InfoWindow
+            visible={true}
+            >
+              <div >
+                <p>Click on the ma</p>
+              </div>
+          </InfoWindow>
+          </Marker>
           )
         })
 

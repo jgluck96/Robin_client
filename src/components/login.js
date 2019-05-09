@@ -3,6 +3,8 @@ import { login } from '../actions/users'
 import { connect } from 'react-redux'
 // import Modal from './modal';
 import {withRouter} from 'react-router'
+import { closeModal, closeSignupModal, closeLoginModal, closeReviewModal } from '../actions/modal'
+
 
 
 
@@ -45,32 +47,48 @@ class Login extends Component {
           this.props.login(data.user)
         }
       })
-      .then(this.props.history.push('/'))
+      .then(this.props.history.push('/')).then(() => {
+        this.props.closeModal()
+        this.props.closeLoginModal()
+        this.props.closeSignupModal()
+        this.props.closeReviewModal()
+        document.getElementById('root').setAttribute('class', '')
+      })
   }
 
   render(){
     return(
-      <div>
-        <form onSubmit={this.handleSubmit}>
+      <React.Fragment>
+      <div style={{marginTop: '12%'}}>
+        <form>
+         <label class="form-label">Email</label>
          <input
+           className="form-control"
            placeholder='email'
            name='email'
            onChange={this.handleChange}
            value={this.state.email}
            type="text">
          </input>
+         <label class="form-label">Password</label>
          <input
+           className="form-control"
            placeholder='password'
+           type='password'
            name='password'
            onChange={this.handleChange}
            value={this.state.password}
-           type="text">
+           >
          </input>
-         <button type='submit'>Log in</button>
         </form>
       </div>
+      <hr />
+        <div style={{float: 'right'}}>
+          <button onClick={this.handleSubmit} type='submit' className="btn btn-primary px-3">Log in</button>
+        </div>
+      </React.Fragment>
     )
   }
 }
 
-export default withRouter(connect(null, {login})(Login))
+export default withRouter(connect(null, {login, closeModal, closeSignupModal, closeLoginModal, closeReviewModal})(Login))

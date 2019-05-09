@@ -17,7 +17,7 @@ class ItemReview extends Component {
   render(){
     return(
       <div class="media d-block d-sm-flex review">
-        <div class="text-md-center mr-4 mr-xl-5"><img src="https://d19m59y37dris4.cloudfront.net/directory/1-1/img/avatar/avatar-4.jpg" alt="Jabba Hut" class="d-block avatar avatar-xl p-2 mb-2" /><span class="text-uppercase text-muted text-sm">Dec 2018</span></div>
+        <div class="text-md-center mr-4 mr-xl-5"><img src={this.props.userReview.img} alt="" class="d-block avatar avatar-xl p-2 mb-2" /><span class="text-uppercase text-muted text-sm">Dec 2018</span></div>
         <div class="media-body">
           <h6 class="mt-2 mb-1">{this.props.userReview.name}</h6>
           <div class="mb-2">

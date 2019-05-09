@@ -38,3 +38,17 @@ export const closeSignupModal = () => {
     payload: false
   }
 }
+
+export const openReviewModal = (item) => {
+  return {
+    type: 'OPEN_REVIEW_MODAL',
+    payload: {status: true, item: item}
+  }
+
+}
+export const closeReviewModal = () => {
+  return {
+    type: 'CLOSE_REVIEW_MODAL',
+    payload: false
+  }
+}

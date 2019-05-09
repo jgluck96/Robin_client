@@ -17,11 +17,11 @@ import {itemShow} from '../actions/items'
   render(){
     console.log(this.props.user);
     return(
-      <div>
+      <div style={{marginBottom: '-6.5%'}}>
       {this.props.user ?
 
         <section class="py-5 py-lg-6">
-          <div class="container text-center">
+          <div style={{marginTop: '4%'}} class="container text-center">
             <p class="subtitle text-primary">Added new listing</p>
               <h1 class="h2 mb-5"> Listing uploaded</h1>
             <p class="mb-5"><img src="https://d19m59y37dris4.cloudfront.net/directory/1-1/img/illustration/undraw_celebration_0jvk.svg" alt="" style={{width: "400px"}} class="img-fluid" /></p>

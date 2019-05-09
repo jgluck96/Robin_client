@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
-import { closeModal, closeSignupModal, closeLoginModal } from '../actions/modal'
+import { closeModal, closeSignupModal, closeLoginModal, closeReviewModal } from '../actions/modal'
 import {connect} from 'react-redux'
 
 
@@ -41,7 +41,7 @@ class Modal extends Component {
         style={{
           padding: 20,
           background: '#fff',
-          borderRadius: '2px',
+          borderRadius: '5%',
           display: 'inline-block',
           minHeight: '300px',
           margin: '1rem',
@@ -53,20 +53,23 @@ class Modal extends Component {
           left: '50%',
           right: 'auto',
           bottom: 'auto',
+          width: '40%',
+          height: '60%',
           marginRight: '-50%',
           transform: 'translate(-50%, -50%)'
         }}
 
         >
+        <button style={{float: 'right'}} onClick={() => {
+          this.props.closeModal()
+          this.props.closeLoginModal()
+          this.props.closeSignupModal()
+          this.props.closeReviewModal()
+          document.getElementById('root').setAttribute('class', '')
+        }
+      }>x</button>
           {this.props.children}
-          <hr />
-          <button onClick={() => {
-            this.props.closeModal()
-            this.props.closeLoginModal()
-            this.props.closeSignupModal()
-            document.getElementById('root').setAttribute('class', '')
-          }
-            }>x</button>
+
         </div>
       </div>,
       portalRoot,
@@ -74,4 +77,4 @@ class Modal extends Component {
   }
 }
 
-export default connect(null, {closeModal, closeSignupModal, closeLoginModal})(Modal)
+export default connect(null, {closeModal, closeSignupModal, closeLoginModal, closeReviewModal})(Modal)

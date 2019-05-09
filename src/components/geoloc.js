@@ -6,9 +6,9 @@ class Demo extends React.Component {
     long: 0
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     if (window.navigator.geolocation) {
-      await navigator.geolocation.getCurrentPosition(position => {
+      navigator.geolocation.getCurrentPosition(position => {
         this.setState({lat: position.coords.latitude})
       })}
 
@@ -21,8 +21,8 @@ class Demo extends React.Component {
     return (
       <Fragment>
       <h1>Anything</h1>
-        <h1>{this.lat}</h1>
-        <h1>{this.state.lat}</h1>
+        <h1>{await this.lat}</h1>
+        <h1>{this.state.long}</h1>
       </Fragment>
     )
   }

@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import Modal from './modal'
 import { openModal, closeModal } from '../actions/modal'
 import { itemShow } from '../actions/items'
+import {withRouter} from 'react-router'
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -112,6 +113,8 @@ class RentalTotal extends Component {
   summary = (e) => {
     e.preventDefault()
     this.props.openModal()
+    document.getElementById('root').setAttribute('class', 'modal-overflow')
+
   }
 
 
@@ -146,16 +149,20 @@ class RentalTotal extends Component {
             days_rented: this.state.days,
             subtotal: this.state.subtotal,
             service_fee: this.state.service_fee,
-            total_price: this.state.total
+            total_price: this.state.total,
+            read: false
           })
-        })
+        }).then(this.props.history.push('/request-sent'))
       })
       this.props.closeModal()
+      document.getElementById('root').setAttribute('class', '')
+
   }
 
 
 
   render() {
+
     const mergedDates = [].concat.apply([], this.props.item.rentals.map(rental => this.getDateArray(new Date(rental.date_start), new Date(rental.date_end))))
     return (
       <div>
@@ -164,7 +171,7 @@ class RentalTotal extends Component {
               <label className="form-labelR">Beginning on:</label>
               <div className="datepicker-container datepicker-container-right">
               <DatePicker className="form-controlR"
-              disableKeyboardNavigation={true}
+                disableKeyboardNavigation={true}
                 placeholderText="start date"
                 selected={this.state.startDate}
                 selectsStart
@@ -193,15 +200,15 @@ class RentalTotal extends Component {
               <div>
                 <div className='flex'>
                   <div>${this.props.item.rental_price} x {this.state.days} days:
-                  <span>${this.state.subtotal}</span>
+                  <span style={{float: 'right'}}>${this.state.subtotal}</span>
                 </div>
                 </div>
                 <div>
-                  <div>Service Fee: <span>${this.state.service_fee}</span></div>
+                  <div>Service Fee: <span style={{float: 'right'}}>${this.state.service_fee}</span></div>
                 </div>
                     <hr className="my-4"/>
                 <div>
-                  <div>Total Price: <span>${this.state.total}</span></div>
+                  <div>Total Price: <span style={{float: 'right'}}>${this.state.total}</span></div>
                 </div>
               </div>
             <div className="form-group">
@@ -210,12 +217,15 @@ class RentalTotal extends Component {
           </form>
           {this.props.modal ?
           <Modal>
-            <div>
-              <div>Total Price: <span>${this.state.total}</span></div>
-            </div>
             <hr className="my-4"/>
-            <textarea placeholder="message.."></textarea>
-            <button onClick={this.sendRequest} className="btn btn-primary">send request</button>
+            <div>
+              <div className="form-label" style={{padding: '12px', fontSize: '20px'}}>Total Price: <span style={{color: '#545454'}}>${this.state.total}</span></div>
+              <div className="form-label" style={{padding: '12px', fontSize: '20px'}}>Date Start: <span style={{color: '#545454'}}>{this.state.formattedStart + ' ' + new Date().toTimeString().split(' ')[0]}</span></div>
+              <div className="form-label" style={{padding: '12px', fontSize: '20px'}}>Date End: <span style={{color: '#545454'}}>{this.state.formattedEnd + ' ' + new Date().toTimeString().split(' ')[0]}</span></div>
+              <div className="form-label" style={{padding: '12px', fontSize: '20px'}}>Days: <span style={{color: '#545454'}}>{this.state.days}</span></div>
+            </div>
+            <hr />
+            <button style={{padding: '12px'}} onClick={this.sendRequest} className="btn btn-primary">send request</button>
           </Modal>
           :
           null
@@ -234,4 +244,4 @@ class RentalTotal extends Component {
     }
   }
 
-export default connect(mapStateToProps, {openModal, itemShow, closeModal})(RentalTotal)
+export default withRouter(connect(mapStateToProps, {openModal, itemShow, closeModal})(RentalTotal))

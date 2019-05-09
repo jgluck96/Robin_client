@@ -8,12 +8,6 @@ export default class Inbox extends Component {
     const now = new Date().getTime();
     const distance =  countDownDate - now;
 
-  // Update the count down every 1 second
-
-
-    // Get todays date and time
-    // Find the distance between now and the count down date
-    // Time calculations for days, hours, minutes and seconds
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));

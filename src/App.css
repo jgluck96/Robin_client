@@ -124,6 +124,15 @@ ul ol {
   margin-bottom: 0;
 }
 
+.bimg {
+  width: 100%;
+height: 650px;
+background-image: url("https://d19m59y37dris4.cloudfront.net/directory/1-1/img/photo/photo-1490578474895-699cd4e2cf59.jpg");
+background-size: cover;
+background-repeat: no-repeat;
+background-position: 50% 50%;
+}
+
 dt {
   font-weight: 700;
 }
@@ -325,12 +334,12 @@ select {
   word-wrap: normal;
 }
 
-button,
+/* button,
 [type="button"],
 [type="reset"],
 [type="submit"] {
   -webkit-appearance: button;
-}
+} */
 
 button:not(:disabled),
 [type="button"]:not(:disabled),
@@ -687,7 +696,14 @@ pre code {
   padding-right: 15px;
   padding-left: 0px;
   top: 50px;
-
+}
+.col-md-6 {
+  position: relative;
+  width: 100%;
+  height: 50%;
+  padding-right: 15px;
+  padding-left: 0px;
+  top: 50px;
 }
 
 .col {
@@ -1167,7 +1183,7 @@ pre code {
   }
   .col-lg-2 {
     flex: 0 0 16.66667%;
-    max-width: 16.66667%;
+    max-width: 40.66667%;
   }
   .col-lg-3 {
     flex: 0 0 25%;
@@ -1341,7 +1357,7 @@ pre code {
   }
   .col-xl-10 {
     flex: 0 0 83.33333%;
-    max-width: 83.33333%;
+    max-width: 63.33333%;
   }
   .col-xl-11 {
     flex: 0 0 91.66667%;
@@ -6322,7 +6338,7 @@ a.close.disabled {
 a.bg-primary:hover, a.bg-primary:focus,
 button.bg-primary:hover,
 button.bg-primary:focus {
-  background-color: #326f34 !important;
+  background-color: #9eebfa !important;
 }
 
 .bg-secondary {
@@ -6332,7 +6348,7 @@ button.bg-primary:focus {
 a.bg-secondary:hover, a.bg-secondary:focus,
 button.bg-secondary:hover,
 button.bg-secondary:focus {
-  background-color: #d91a72 !important;
+  background-color: #9eebfa !important;
 }
 
 .bg-success {
@@ -6342,7 +6358,7 @@ button.bg-secondary:focus {
 a.bg-success:hover, a.bg-success:focus,
 button.bg-success:hover,
 button.bg-success:focus {
-  background-color: #1e7e34 !important;
+  background-color: #9eebfa !important;
 }
 
 .bg-info {
@@ -6352,7 +6368,7 @@ button.bg-success:focus {
 a.bg-info:hover, a.bg-info:focus,
 button.bg-info:hover,
 button.bg-info:focus {
-  background-color: #117a8b !important;
+  background-color: #9eebfa !important;
 }
 
 .bg-warning {
@@ -6362,7 +6378,7 @@ button.bg-info:focus {
 a.bg-warning:hover, a.bg-warning:focus,
 button.bg-warning:hover,
 button.bg-warning:focus {
-  background-color: #d39e00 !important;
+  background-color: #9eebfa !important;
 }
 
 .bg-danger {
@@ -6377,6 +6393,15 @@ button.bg-danger:focus {
 
 .bg-light {
   background-color: #f8f9fa !important;
+}
+
+.dot{
+  height: 7px;
+  width: 6px;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+  position: absolute;
 }
 
 a.bg-light:hover, a.bg-light:focus,
@@ -13383,7 +13408,7 @@ button.mfp-close {
 }
 
 .bg-primary-light {
-  background: #9bd29d;
+  background: #9eebfa;
 }
 
 .text-hover-secondary:focus, .text-hover-secondary:hover {

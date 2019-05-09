@@ -1,6 +1,7 @@
-export default (state = [], action) => {
+
+export default (state = null, action) => {
   switch (action.type) {
-    case 'EXPIRING_RENTALS':
+    case 'FALSE_NOTIFS':
       return action.payload
 
     default:

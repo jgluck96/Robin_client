@@ -50,6 +50,20 @@ export const fetchWhatIWant = (currentUserId) => {
   }
 }
 
+
+export const clearWhatIWantRentals = () => {
+  return {
+      type: 'FETCH_WHATIWANT',
+      payload: []
+  }
+}
+export const clearRequests = () => {
+  return {
+      type: 'FETCH_REQUESTS',
+      payload: []
+  }
+}
+
 export const requestAccepted = (reqId, currentUserId) => {
   return dispatch => {
   fetch(`http://localhost:3000/requests/${reqId}`, {

@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { addListing } from '../actions/items'
 import {withRouter} from 'react-router'
+import Uploader from './Uploader';
+import uploadcare from "uploadcare-widget"
 // import uuid from 'uuid';
 
 class ListItemForm extends Component {
@@ -18,7 +20,8 @@ class ListItemForm extends Component {
     value: '',
     rental_price: '',
     listPage: 1,
-    loadValue: 33.3333
+    loadValue: 33.3333,
+    photos: []
   }
 
   changeHandler = e => {
@@ -44,7 +47,7 @@ class ListItemForm extends Component {
           city: this.state.city,
           state: this.state.state
         }
-        this.props.addListing(item, this.props.user.id)
+        this.props.addListing(item, this.props.user.id, this.state.photos)
         this.setState({
           title: '',
           description: '',
@@ -55,7 +58,8 @@ class ListItemForm extends Component {
           zipcode: '',
           country: '',
           value: '',
-          rental_price: ''
+          rental_price: '',
+          photos: []
         })
         this.props.history.push('/listing-uploaded')
     })
@@ -85,11 +89,11 @@ class ListItemForm extends Component {
         <section className="py-5" style={{marginTop: '5%'}}>
           <div className="container">
             <p className="subtitle text-primary">Add new listing</p>
-            <h1 className="h2 mb-5"> Basic information <span class="text-muted float-right">Step {this.state.listPage}</span></h1>
+            <h1 className="h2 mb-5"> Add listing <span class="text-muted float-right">Step {this.state.listPage}</span></h1>
             <form>
             {this.state.listPage === 1 ?
-              <div>
-              <div className="row form-block">
+              <div style={{marginBottom: '-3.5%'}}>
+                <div className="row form-block" >
 
                 <div class="col-lg-4">
                   <h4>Basic</h4>
@@ -102,18 +106,24 @@ class ListItemForm extends Component {
                     <label class="form-label">Listing title</label>
                     <input onChange={this.changeHandler} id="form_name" className="form-control" name='title' value={this.state.title} placeholder='title'/>
                   </div>
-                  <div class="form-group mb-5">
-                    <label  class="form-label">Item description</label>
-                    <textarea id="form_description" className="form-control" onChange={this.changeHandler} name='description' value={this.state.description} placeholder='description'/>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label">Category</label>
-                      <div className="btn btn-selectpicker form-control">
-                      <select onChange={this.changeHandler} id="form_type" className="btn dropdown-toggle bs-placeholder form-control" name="category" title="Categories">
-                        <option value></option>
-                        <option value="Furniture">Furniture</option>
-                        <option value="Sports & Outdoors">Sports & Outdoors</option>
-                      </select>
+                  <div className="form-group">
+                  <div className="row">
+                    <Uploader
+                      id='file'
+                      name='file'
+                      files={this.state.photos}
+                      data-multiple="true"
+                      data-multiple-min="1"
+                      data-multiple-max="7"
+
+                      onUploadComplete={info => {
+                        for (let i = (info.count - 1); i > -1 ; i--) {
+                          this.setState((prevState) => ({
+                            photos: [...prevState.photos, `${info.cdnUrl}nth/${i}/`]
+                          }))
+                        }
+                      }} />
+                      <div style={{padding: '5px', marginLeft: '2px'}}>Photos selected: {this.state.photos.length}</div>
                     </div>
                   </div>
                 </div>
@@ -127,7 +137,7 @@ class ListItemForm extends Component {
             </div>
               :
               this.state.listPage === 2 ?
-              <div>
+              <div style={{marginBottom: '4%'}}>
                 <div className="row form-block">
                     <div class="col-lg-4">
                       <h4>Let's talk money</h4>
@@ -135,6 +145,27 @@ class ListItemForm extends Component {
                     </div>
 
                     <div class="col-lg-7 ml-auto">
+                    <div class="form-group mb-5">
+                      <label  class="form-label">Item description</label>
+                      <textarea id="form_description" className="form-control" onChange={this.changeHandler} name='description' value={this.state.description} placeholder='description'/>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Category</label>
+                        <div className="btn btn-selectpicker form-control">
+                        <select onChange={this.changeHandler} id="form_type" style={{width: '100%'}} className="btn bs-placeholder" name="category" title="Categories">
+                          <option value></option>
+                          <option value="Antiques">Antiques</option>
+                          <option value="Automotive">Automotive</option>
+                          <option value="Boats & marine">Boats & marine</option>
+                          <option value="Clothing">Clothing</option>
+                          <option value="Electronics">Electronics</option>
+                          <option value="Exercise">Exercise</option>
+                          <option value="Furniture">Furniture</option>
+                          <option value="Kids & baby">Kids & baby</option>
+                          <option value="Sports & Outdoors">Sports & Outdoors</option>
+                        </select>
+                      </div>
+                    </div>
                     <div class="form-group">
                       <label class="form-label">Value</label>
                       <input onChange={this.changeHandler} name='value' id="form_name" className="form-control" value={this.state.value} type="number" placeholder='value'/>
@@ -157,7 +188,7 @@ class ListItemForm extends Component {
               </div>
               :
               <div>
-                <div className="row form-block">
+                <div className="row form-block" style={{marginBottom: '8%'}}>
                   <div class="col-lg-4">
                     <h4>Location</h4>
                     <p class="text-muted text-sm">Where the item is located.</p>
@@ -169,13 +200,13 @@ class ListItemForm extends Component {
                       <input onChange={this.changeHandler} id="form_street" className="form-control" name='streetAddress' value={this.state.streetAddress} placeholder='street address'/>
                     </div>
                     <div className="row">
-                      <div className="col-md-6">
+                      <div className="col-md-5">
                         <div class="form-group">
                           <label class="form-label">City</label>
                           <input onChange={this.changeHandler} name='city' className="form-control" value={this.state.city} placeholder='city'/>
                         </div>
                       </div>
-                      <div className="col-md-6">
+                      <div className="col-md-5">
                         <div class="form-group">
                           <label class="form-label">State</label>
                           <input onChange={this.changeHandler} name='state' className="form-control" value={this.state.state} placeholder='state'/>

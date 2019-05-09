@@ -12,12 +12,15 @@ import SignUp from './components/signup'
 import LogIn from './components/login'
 import Modal from './components/modal'
 import ListingUploaded from './components/listingUploaded'
+import RequestSent from './components/requestSent'
 import Inbox from './components/inbox'
 import { autoLogin } from './actions/users'
-import { fetchRequests } from './actions/requests'
+import { fetchRequests, fetchWhatIWant } from './actions/requests'
 import {connect} from 'react-redux'
 import { fetchMyRentals } from './actions/rentals'
 import { userGeo } from './actions/geolocation'
+import Review from './components/review'
+import Footer from './components/footer'
 
 
 class App extends Component {
@@ -30,10 +33,13 @@ class App extends Component {
 
     if (localStorage.getItem('token')) {
       this.props.autoLogin()
-      if (this.props.user) {
-        this.props.fetchRequests(this.props.user.id)
-        this.props.fetchMyRentals(this.props.user.id)
-      }
+      // if (this.props.user) {
+        setTimeout(() => {
+          this.props.fetchWhatIWant(this.props.user.id)
+          this.props.fetchRequests(this.props.user.id)
+          this.props.fetchMyRentals(this.props.user.id)
+        }, 1000 )
+      // }
     }
   }
 
@@ -57,39 +63,52 @@ class App extends Component {
               <Route exact path='/item-show' component={ItemShowPage} />
               <Route exact path='/account' component={AccountPage} />
               <Route exact path='/listing-uploaded' component={ListingUploaded} />
+              <Route exact path='/request-sent' component={RequestSent} />
               <Route exact path='/inbox' component={Inbox} />
             </Switch>
             {this.props.loginModal ?
               <React.Fragment>
-              <Modal>
-                <LogIn />
-              </Modal>
+                <Modal>
+                  <LogIn />
+                </Modal>
               </React.Fragment>
               :
               null
             }
             {this.props.signupModal ?
               <React.Fragment>
-              <Modal>
-                <SignUp />
-              </Modal>
+                <Modal>
+                  <SignUp />
+                </Modal>
+              </React.Fragment>
+              :
+              null
+            }
+            {this.props.reviewModal ?
+              <React.Fragment>
+                <Modal>
+                  <Review />
+                </Modal>
               </React.Fragment>
               :
               null
             }
           </div>
+          <Footer />
         </React.Fragment>
     )
   }
 }
 
 const mapStateToProps = state => {
+  console.log(state);
   return {
     modal: state.modal,
     loginModal: state.loginModal,
     signupModal: state.signupModal,
-    user: state.user
+    user: state.user,
+    reviewModal: state.reviewModal
   }
 }
 
-export default connect(mapStateToProps, { autoLogin, fetchRequests, fetchMyRentals, userGeo })(App);
+export default connect(mapStateToProps, { autoLogin, fetchRequests, fetchMyRentals, userGeo, fetchWhatIWant })(App);
