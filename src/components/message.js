@@ -2,12 +2,15 @@ import React, {Component} from 'react'
 import {itemShow} from '../actions/items'
 import {connect} from 'react-redux'
 import {openReviewModal} from '../actions/modal'
+import {withRouter} from 'react-router'
 
 class Message extends Component {
 
   show = item => {
     localStorage.setItem("currentItem", JSON.stringify(item))
+    console.log(item);
     this.props.itemShow(item)
+    this.props.history.push(`/item-show/${item.id}`)
   }
 
   openReview = (item) => {
@@ -49,7 +52,7 @@ class Message extends Component {
 
         this.props.rental.status === 'expiring' ?
               <div style={{width:'100%', paddingTop: '10px', backgroundColor: 'rgba(192,192,192,0.3)', borderRadius: '5px'}}>
-                <span onClick={() => this.deleteRentNotif(this.props.rental.id, this.props.rental)} style={{float: "right", paddingRight: '15px', cursor: 'pointer'}}>x</span><p style={{marginLeft: '20px'}}>Make sure to return your rental for <a style={{fontWeight: 'bold', color: '#4629d3'}} onClick={() => this.show(this.props.item)} href='/item-show'>{this.props.item.title}</a> within the next 2 hours!</p>
+                <span onClick={() => this.deleteRentNotif(this.props.rental.id, this.props.rental)} style={{float: "right", paddingRight: '15px', cursor: 'pointer'}}>x</span><p style={{marginLeft: '20px'}}>Make sure to return your rental for <a style={{fontWeight: 'bold', color: '#4629d3'}} onClick={() => this.show(this.props.item)} href='/item-show/:id'>{this.props.item.title}</a> within the next 2 hours!</p>
               </div>
               :
               <div style={{width:'100%', paddingTop: '10px', backgroundColor: 'rgba(192,192,192,0.3)', borderRadius: '5px'}}>
@@ -58,7 +61,7 @@ class Message extends Component {
 
         :
           <div style={{width:'100%', paddingTop: '10px', backgroundColor: 'rgba(192,192,192,0.3)', borderRadius: '5px'}}>
-               <span onClick={() => this.deleteReqNotif(this.props.request.id, this.props.notif)} style={{float: "right", paddingRight: '15px', cursor: 'pointer'}}>x</span><p style={{marginLeft: '20px'}}>You have a new rental request for <a style={{fontWeight: 'bold', color: '#4629d3'}} onClick={() => this.show(this.props.item)} href='/item-show'>{this.props.item.title}</a></p>
+               <span onClick={() => this.deleteReqNotif(this.props.request.id, this.props.notif)} style={{float: "right", paddingRight: '15px', cursor: 'pointer'}}>x</span><p style={{marginLeft: '20px'}}>You have a new rental request for <a style={{fontWeight: 'bold', color: '#4629d3'}} onClick={() => this.show(this.props.item)} href='/item-show/:id'>{this.props.item.title}</a></p>
                </div>
 
 
@@ -76,4 +79,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, {openReviewModal})(Message)
+export default withRouter(connect(mapStateToProps, {openReviewModal})(Message))

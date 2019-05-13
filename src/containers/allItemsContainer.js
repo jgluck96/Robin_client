@@ -55,32 +55,10 @@ class ItemsContainer extends Component {
               </div>
             </div>
             <div className="row">
-        {this.state.activePage === 1 ?
-          this.props.items.slice(0,8).map(itemObj => {
+        {
+          this.props.items.slice((this.state.activePage * 8)-8,(this.state.activePage * 8)).map(itemObj => {
             return <ItemCard key={itemObj.id} item={itemObj} title={itemObj.title} description={itemObj.description} category={itemObj.category}/>
           })
-          :
-          this.state.activePage === 2 ?
-            this.props.items.slice(8,15).map(itemObj => {
-              return <ItemCard key={itemObj.id} item={itemObj} title={itemObj.title} description={itemObj.description} category={itemObj.category}/>
-            })
-            :
-            this.state.activePage === 3 ?
-              this.props.items.slice(15,22).map(itemObj => {
-                return <ItemCard key={itemObj.id} item={itemObj} title={itemObj.title} description={itemObj.description} category={itemObj.category}/>
-              })
-              :
-              this.state.activePage === 4 ?
-                this.props.items.slice(22,29).map(itemObj => {
-                  return <ItemCard key={itemObj.id} item={itemObj} title={itemObj.title} description={itemObj.description} category={itemObj.category}/>
-                })
-                :
-                this.state.activePage === 5 ?
-                  this.props.items.slice(29,37).map(itemObj => {
-                    return <ItemCard key={itemObj.id} item={itemObj} title={itemObj.title} description={itemObj.description} category={itemObj.category}/>
-                  })
-                  :
-                  null
         }
             </div>
             <div>

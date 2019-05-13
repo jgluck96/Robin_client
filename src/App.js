@@ -58,13 +58,16 @@ class App extends Component {
               <Route exact path='/' component={Home} />
               <Route exact path='/create-listing' component={ListItem} />
               <Route exact path='/browse-all' component={AllItems} />
-
               <Route exact path='/log-out' component={Home} />
-              <Route exact path='/item-show' component={ItemShowPage} />
               <Route exact path='/account' component={AccountPage} />
               <Route exact path='/listing-uploaded' component={ListingUploaded} />
               <Route exact path='/request-sent' component={RequestSent} />
               <Route exact path='/inbox' component={Inbox} />
+              <Route
+              exact path="/item-show/:id"
+              render={() => (
+                <ItemShowPage />
+              )}/>
             </Switch>
             {this.props.loginModal ?
               <React.Fragment>

@@ -9,17 +9,17 @@ import {connect} from 'react-redux'
 
 class CarCard extends Component {
 
+  state = {
+    owner: ''
+  }
+
+
   show = item => {
     console.log(item);
     localStorage.setItem("currentItem", JSON.stringify(item))
     this.props.itemShow(item)
     // this.props.showItemOwner(item)
-    this.props.history.push('/item-show')
-    window.scrollTo({
-      top: 100,
-      left: 100
-    })
-    window.location.reload();
+    this.props.history.push(`/item-show/${item.id}`)
 
   }
 
@@ -34,17 +34,24 @@ class CarCard extends Component {
 
   render(){
     // console.log(this.props.item.reviews)
-
+    (() => {
+      fetch('http://localhost:3000/users')
+      .then(resp => resp.json())
+      .then(users => {
+        const foundUser = users.find(user => user.id === this.props.item.own_items[0].user_id)
+        this.setState({owner: foundUser})
+      })
+    })()
     return(
       <div className="col-sm-11 mb-5">
-        <div className="card h-100 border-0 shadow" onClick={() => this.show(this.props.item)}>
+        <a className="card h-100 border-0 shadow" href="" onClick={() => this.show(this.props.item)}>
 
 
         <div style={{height: '170px'}} class="card-img-top overflow-hidden gradient-overlay">
           <img style={{width: '100%', height: '100%'}} src={this.props.item.images.length > 0 ? this.props.item.images[0].url : "https://i.ibb.co/WzbJNhP/Screen-Shot-2019-05-06-at-11-23-37-PM.png"}/>
             <div class="card-img-overlay-bottom z-index-20">
-              <div class="media text-white text-sm align-items-center"><img src="https://d19m59y37dris4.cloudfront.net/directory/1-1/img/avatar/avatar-7.jpg" alt="John" class="avatar avatar-border-white mr-2" />
-                <div class="media-body">John</div>
+              <div class="media text-white text-sm align-items-center"><img src={this.state.owner.img} alt="" class="avatar avatar-border-white mr-2" />
+                <div class="media-body">{this.state.owner.name}</div>
               </div>
             </div>
         </div>
@@ -67,7 +74,7 @@ class CarCard extends Component {
                   <p class="card-text text-muted"><span class="h4 text-primary">${this.props.item.rental_price}</span> per day</p>
                 </div>
               </div>
-        </div>
+        </a>
       </div>
     )
   }

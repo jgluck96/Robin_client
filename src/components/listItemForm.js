@@ -4,6 +4,8 @@ import { addListing } from '../actions/items'
 import {withRouter} from 'react-router'
 import Uploader from './Uploader';
 import uploadcare from "uploadcare-widget"
+import $ from 'jquery';
+
 // import uuid from 'uuid';
 
 class ListItemForm extends Component {
@@ -79,6 +81,18 @@ class ListItemForm extends Component {
     }))
   }
 
+  removePhoto = url => {
+    this.setState({photos: this.state.photos.filter(photo => photo !== url)})
+  }
+
+  componentDidUpdate(){
+    if (this.state.photos.length > 0 && this.state.listPage === 1) {
+      document.querySelector(".uploadcare--widget__button.uploadcare--widget__button_type_remove").addEventListener('click', () => {
+        this.setState({photos: []})
+      })
+    }
+  }
+
   render(){
     return(
       <div>
@@ -107,25 +121,34 @@ class ListItemForm extends Component {
                     <input onChange={this.changeHandler} id="form_name" className="form-control" name='title' value={this.state.title} placeholder='title'/>
                   </div>
                   <div className="form-group">
-                  <div className="row">
+                    <div style={{display: 'flex', flexWrap: 'nowrap'}}>
+                    {
+                      this.state.photos.map(photo => <img style={{textAlign: 'center', width: '100px', height: '100px', margin: '10px'}} src={photo}/>)
+                    }
+                    </div>
                     <Uploader
                       id='file'
                       name='file'
-                      files={this.state.photos}
+                      type='hidden'
+                      files={this.state.photos.length}
                       data-multiple="true"
-                      data-multiple-min="1"
-                      data-multiple-max="7"
+                      data-crop
 
+                      data-multiple-min="1"
+                      data-multiple-max='7'
+                      value={this.state.photos.toString().replace(/[\[\]']+/g,'')}
                       onUploadComplete={info => {
-                        for (let i = (info.count - 1); i > -1 ; i--) {
-                          this.setState((prevState) => ({
-                            photos: [...prevState.photos, `${info.cdnUrl}nth/${i}/`]
-                          }))
-                        }
-                      }} />
-                      <div style={{padding: '5px', marginLeft: '2px'}}>Photos selected: {this.state.photos.length}</div>
+                        this.setState({photos: []})
+                          for (let i = (info.count - 1); i > -1 ; i--) {
+                            if (!this.state.photos.includes(`${info.cdnUrl}nth/${i}/`)) {
+                              this.setState((prevState) => ({
+                                photos: [...prevState.photos, `${info.cdnUrl}nth/${i}/`]
+                              }))
+                            }
+                          }
+                        }}
+                      />
                     </div>
-                  </div>
                 </div>
               </div>
               <div className="row form-block flex-column flex-sm-row">

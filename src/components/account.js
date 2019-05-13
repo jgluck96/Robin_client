@@ -28,23 +28,6 @@ class Account extends Component {
       bio: '',
       clicked: false
     }
-  //
-  //
-  // onClose = () => {
-  //   this.setState({preview: null})
-  // }
-  //
-  // onCrop = (preview) => {
-  //   this.setState({preview})
-  //   console.log(preview);
-  // }
-  //
-  // onBeforeFileLoad = (elem) => {
-  //   if(elem.target.files[0].size > 71680){
-  //     alert("File is too big!");
-  //     elem.target.value = "";
-  //   };
-  // }
 
   saveBio = (e) => {
       e.preventDefault()
@@ -68,7 +51,7 @@ class Account extends Component {
       headers: {
         'content-type': 'application/json'
       },
-      body: JSON.stringify(this.state)
+      body: JSON.stringify({img: this.state.img})
     }).then(window.location.reload())
   }
 
@@ -94,7 +77,7 @@ class Account extends Component {
         </TabList>
 
         <TabPanel>
-          <PerfectScrollbar style={{height: '800px', padding: '10px', border: '1px solid #c5c5c5', width: '97%', marginTop: '0px'}}>
+          <PerfectScrollbar style={{height: '500px', padding: '10px', border: '1px solid #c5c5c5', width: '97%', marginTop: '0px'}}>
           {newReqs.map(req => {
             return <RequestCard id={this.props.requests.indexOf(req)} requester={req.requesterObj} item={req.itemObj}/>
           })}
@@ -151,19 +134,19 @@ class Account extends Component {
         </div>
         {this.props.user.bio ?
           this.state.clicked ?
-          <div style={{width: '13.7%', top: '66%', left: '10%', position: 'absolute'}} class="form-group mb-5">
+          <div style={{width: '13.7%', top: '40%', left: '10%', position: 'fixed'}} class="form-group mb-5">
             <label class="form-label">Bio</label>
             <textarea id="form_description" value={this.state.bio} rows='9' name="bio" className="form-control" onChange={this.changeHandler} placeholder='bio...'/>
             {this.state.bio ? <button onClick={this.saveBio} className="btn btn-primary">Save</button> : null}
           </div>
           :
-          <div style={{width: '13.7%', top: '66%', left: '10%', position: 'absolute'}} class="form-group mb-5">
+          <div style={{width: '13.7%', top: '%', left: '10%', position: 'relative'}} class="form-group mb-5">
             <label class="form-label">Bio</label>
             <div className="form-group" >{this.props.user.bio}</div>
             <button style={{float: 'right'}} onClick={() => this.setState({bio: this.props.user.bio, clicked: true})} className="btn btn-primary">Edit</button>
           </div>
         :
-        <div style={{width: '13.7%', top: '66%', left: '10%', position: 'absolute'}} class="form-group mb-5">
+        <div style={{width: '13.7%', top: '40%', left: '10%', position: 'fixed'}} class="form-group mb-5">
           <label  class="form-label">Bio</label>
           <textarea id="form_description" value={this.state.bio} rows='9' name="bio" className="form-control" onChange={this.changeHandler} placeholder='bio...'/>
           {this.state.bio ? <button onClick={this.saveBio} className="btn btn-primary">Save</button> : null}

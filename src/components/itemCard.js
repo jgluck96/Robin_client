@@ -16,13 +16,10 @@ class ItemCard extends Component {
   show = item => {
     localStorage.setItem("currentItem", JSON.stringify(item))
     this.props.itemShow(item)
-    // this.props.showItemOwner(item)
-    this.props.history.push('/item-show')
-    window.scrollTo({
-      top: 100,
-      left: 100
-    })
-    window.location.reload();
+    // console.log(item);
+    this.props.history.push(`/item-show/${item.id}`)
+
+    // window.location.reload();
 
   }
 
@@ -49,7 +46,7 @@ class ItemCard extends Component {
 
     return(
       <div className="col-sm-6 mb-5">
-        <div className="card h-100 border-0 shadow" onClick={() => this.show(this.props.item)}>
+        <a className="card h-100 border-0 shadow"  onClick={() => this.show(this.props.item)}>
 
 
         <div style={{height: '170px'}} class="card-img-top overflow-hidden gradient-overlay">
@@ -79,7 +76,7 @@ class ItemCard extends Component {
                   <p class="card-text text-muted"><span class="h4 text-primary">${this.props.item.rental_price}</span> per day</p>
                 </div>
               </div>
-        </div>
+        </a>
       </div>
     )
   }

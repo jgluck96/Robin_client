@@ -23,6 +23,7 @@ class Inbox extends Component {
   show = item => {
     localStorage.setItem("currentItem", JSON.stringify(item))
     this.props.itemShow(item)
+    this.props.history.push(`/item-show/${item.id}`)
   }
 
   deleteNotif = (requestId, request) => {
@@ -73,11 +74,11 @@ class Inbox extends Component {
                 } else if (Object.keys(notif).length === 3 && typeof (notif.receiverObj) === 'object') {
                     if (notif.request.accepted) {
                       return (<div style={{width:'100%', paddingTop: '10px', backgroundColor: 'rgba(192,192,192,0.3)', borderRadius: '5px'}}>
-                      <span onClick={() => this.deleteNotif(notif.request.id, notif)} style={{float: "right", paddingRight: '15px', cursor: 'pointer'}}>x</span><p style={{marginLeft: '20px'}}>Your rental request for <a style={{fontWeight: 'bold', color: '#4629d3'}} onClick={() => this.show(notif.itemObj)} href='/item-show'>{notif.itemObj.title}</a> has been accepted!</p>
+                      <span onClick={() => this.deleteNotif(notif.request.id, notif)} style={{float: "right", paddingRight: '15px', cursor: 'pointer'}}>x</span><p style={{marginLeft: '20px'}}>Your rental request for <a style={{fontWeight: 'bold', color: '#4629d3'}} onClick={() => this.show(notif.itemObj)} href='/item-show/:id'>{notif.itemObj.title}</a> has been accepted!</p>
                       </div>)
                     } else {
                       return (<div style={{width:'100%', paddingTop: '10px', backgroundColor: 'rgba(192,192,192,0.3)', borderRadius: '5px'}}>
-                      <span onClick={() => this.deleteNotif(notif.request.id, notif)} style={{float: "right", paddingRight: '15px', cursor: 'pointer'}}>x</span><p style={{marginLeft: '20px'}}>Your rental request for <a style={{fontWeight: 'bold', color: '#4629d3'}} onClick={() => this.show(notif.itemObj)} href='/item-show'>{notif.itemObj.title}</a> was denied.</p>
+                      <span onClick={() => this.deleteNotif(notif.request.id, notif)} style={{float: "right", paddingRight: '15px', cursor: 'pointer'}}>x</span><p style={{marginLeft: '20px'}}>Your rental request for <a style={{fontWeight: 'bold', color: '#4629d3'}} onClick={() => this.show(notif.itemObj)} href='/item-show/:id'>{notif.itemObj.title}</a> was denied.</p>
                       </div>)
                     }
                 } else {

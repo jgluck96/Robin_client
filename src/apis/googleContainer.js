@@ -2,7 +2,7 @@ import React from 'react'
 // import Mapp from './googlemaps'
 // import {GoogleApiWrapper} from 'google-maps-react'
 // import {GoogleApiWrapper} from 'GoogleMapsReactComponent'
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react'
+import {Map, InfoWindow, Marker, GoogleApiWrapper, Circle} from 'google-maps-react'
 
 
 class Container extends React.Component {
@@ -55,7 +55,7 @@ console.log(this.props.google);
           return (
           <Marker
           key={itemObj.id}
-          title={'test'}
+          title='test'
           onClick={this.onMarkerClick}
           name={'Current location'}
           markerWithLabel={window.MarkerWithLabel}
