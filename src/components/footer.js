@@ -33,7 +33,7 @@ class Footer extends Component {
 
   render(){
     return(
-<footer class="position-relative z-index-10">
+<footer class="position-relative fixed-bottom z-index-10">
       <div class="py-5 bg-gray-200 text-muted">
         <div class="container">
           <div class="row">

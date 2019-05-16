@@ -15,7 +15,6 @@ class CarCard extends Component {
 
 
   show = item => {
-    console.log(item);
     localStorage.setItem("currentItem", JSON.stringify(item))
     this.props.itemShow(item)
     // this.props.showItemOwner(item)

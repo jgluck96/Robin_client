@@ -14,6 +14,9 @@ import userGeo from './userGeo'
 import showItemOwner from './showItemOwner'
 import showItemOwnerItems from './showItemOwnersItems'
 import falseNotifs from './falseNotifs'
+import searchLocation from './searchLocation'
+import searchResults from './searchResults'
+import searchTerm from './searchTerm'
 
 
 
@@ -32,5 +35,8 @@ export default combineReducers({
   myRentals,
   userGeo,
   showItemOwner,
-  falseNotifs
+  falseNotifs,
+  searchLocation,
+  searchResults,
+  searchTerm
 })

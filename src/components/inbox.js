@@ -61,11 +61,11 @@ class Inbox extends Component {
     }
     return(
       <div >
-      <label style={{fontSize: '20px', top: '22%', marginLeft: '25%', position: 'absolute'}} className="row form-label">Notifications</label>
+      <label style={{fontSize: '20px', top: '22%', left: '50px', marginTop: '15%', position: 'relative'}} className="row form-label">Notifications</label>
       {
         this.state.falseStuff ?
 
-        <PerfectScrollbar style={{height: '300px', padding: '10px', border: '1px solid grey', width: '60%', marginTop: '20%', marginLeft: '25%', marginBottom: '3.5%'}}>
+        <PerfectScrollbar style={{height: '300px', padding: '10px', border: '1px solid #c5c5c5', position: 'relative', width: '60%', marginTop: '5%', marginLeft: '25%', marginBottom: '9.3%'}}>
 
             {this.state.falseStuff.length > 0 ?
               this.state.falseStuff.map(notif => {
@@ -73,12 +73,12 @@ class Inbox extends Component {
                   return <Message remove={this.remove} request={notif.request} notif={notif} requester={notif.request.requester} item={notif.itemObj}/>
                 } else if (Object.keys(notif).length === 3 && typeof (notif.receiverObj) === 'object') {
                     if (notif.request.accepted) {
-                      return (<div style={{width:'100%', paddingTop: '10px', backgroundColor: 'rgba(192,192,192,0.3)', borderRadius: '5px'}}>
-                      <span onClick={() => this.deleteNotif(notif.request.id, notif)} style={{float: "right", paddingRight: '15px', cursor: 'pointer'}}>x</span><p style={{marginLeft: '20px'}}>Your rental request for <a style={{fontWeight: 'bold', color: '#4629d3'}} onClick={() => this.show(notif.itemObj)} href='/item-show/:id'>{notif.itemObj.title}</a> has been accepted!</p>
+                      return (<div style={{width:'100%', backgroundColor: 'rgba(192,192,192,0.3)', border: '1px solid #c5c5c5'}}>
+                      <span onClick={() => this.deleteNotif(notif.request.id, notif)} style={{float: "right", paddingRight: '15px', cursor: 'pointer', margin: '10px', fontSize: '25px'}}>x</span><p style={{margin: '20px'}}>Your rental request for <a style={{fontWeight: 'bold', color: '#4629d3'}} onClick={() => this.show(notif.itemObj)} href={'/item-show/' + notif.itemObj.id}>{notif.itemObj.title}</a> has been accepted!</p>
                       </div>)
                     } else {
-                      return (<div style={{width:'100%', paddingTop: '10px', backgroundColor: 'rgba(192,192,192,0.3)', borderRadius: '5px'}}>
-                      <span onClick={() => this.deleteNotif(notif.request.id, notif)} style={{float: "right", paddingRight: '15px', cursor: 'pointer'}}>x</span><p style={{marginLeft: '20px'}}>Your rental request for <a style={{fontWeight: 'bold', color: '#4629d3'}} onClick={() => this.show(notif.itemObj)} href='/item-show/:id'>{notif.itemObj.title}</a> was denied.</p>
+                      return (<div style={{width:'100%', backgroundColor: 'rgba(192,192,192,0.3)',  border: '1px solid #c5c5c5'}}>
+                      <span onClick={() => this.deleteNotif(notif.request.id, notif)} style={{float: "right", paddingRight: '15px', cursor: 'pointer', margin: '10px', fontSize: '25px'}}>x</span><p style={{margin: '20px'}}>Your rental request for <a style={{fontWeight: 'bold', color: '#4629d3'}} onClick={() => this.show(notif.itemObj)} href={'/item-show/'+ notif.itemObj.id}>{notif.itemObj.title}</a> was denied.</p>
                       </div>)
                     }
                 } else {
@@ -94,7 +94,7 @@ class Inbox extends Component {
 
         </PerfectScrollbar>
         :
-        <div style={{display: 'block', marginTop: '25%', marginLeft: '50%', marginBottom: "9%"}}>
+        <div style={{display: 'block', marginTop: '12.5%', marginLeft: '50%', marginBottom: "15.5%"}}>
           <Loading style={{top: 'auto'}} type='puff' width={100} height={100} fill='#9eebfa' />
         </div>
       }

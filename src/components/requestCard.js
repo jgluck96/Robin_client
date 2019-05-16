@@ -64,13 +64,15 @@ class RequestCard extends Component {
 
     return(
 
-      <div className="col-sm-6 mb-5">
-        <div style={{width: '200%'}} className="card h-100 border-0 shadow">
+      <div className="col-sm-6 mb-4">
+        <div style={{width: '200%', padding: '8px'}} className="card h-100 border-0 shadow">
           <h5>Requested item: {this.props.item.title}</h5>
-          <p>Requested by: <span style={{float: 'right'}}>{this.props.requester.name}</span></p>
+          <div>Requested by: <span style={{float: 'right'}}>{this.props.requester.name}</span></div>
+          <div>Start Date: <span style={{float: 'right'}}>{new Date(this.props.request.request.date_start).toDateString() + ' ' + new Date(this.props.request.request.date_start).toLocaleTimeString()}</span></div>
+          <div>End Date: <span style={{float: 'right'}}>{new Date(this.props.request.request.date_end).toDateString() + ' ' + new Date(this.props.request.request.date_end).toLocaleTimeString()}</span></div>
           <div style={{marginLeft: '10px'}} className="row">
-            <button style={{width: '20%', margin: '5px'}} className="btn btn-primary" onClick={this.submitRental}>Accept</button>
-            <button style={{margin: '5px', backgroundColor: 'grey', color: 'white', width: '20%'}} className="btn" onClick={() => {
+            <button style={{width: '20%', margin: '5px', fontSize: '9px'}} className="btn btn-primary" onClick={this.submitRental}>Accept</button>
+            <button style={{margin: '5px', backgroundColor: 'grey', color: 'white', width: '20%', fontSize: '9px'}} className="btn" onClick={() => {
               this.props.requestDenied(findRequest.request.id, this.props.user.id)
               setTimeout(() => this.props.fetchWhatIWant(this.props.user.id), 500)
               }

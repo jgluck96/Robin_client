@@ -12,26 +12,6 @@ import { notif, clearNotifs } from '../actions/notif'
 
 class NavBar extends Component {
 
-  // state = {
-  //   falseReadRentals: [],
-  //   falseReadRequests: [],
-  //   falseReadAndExpiredRentals: []
-  // }
-  // componentDidMount() {
-  //   if (localStorage.getItem('token')) {
-  //     const falseReadRentals = this.props.rentals.filter(rental => rental.read === false)
-  //     const falseReadAndExpiredRentals = this.props.rentals.filter(rental => rental.read === false && rental.status === 'expired')
-  //     const falseReadRequests = this.props.requests.filter(req => req.request.read === false)
-  //     console.log(falseReadRentals, falseReadRequests, falseReadAndExpiredRentals);
-  //     this.setState({
-  //       falseReadRentals: falseReadRentals,
-  //       falseReadRequests: falseReadAndExpiredRentals,
-  //       falseReadAndExpiredRentals: falseReadRequests
-  //     })
-  //
-  //   }
-  // }
-
   componentDidUpdate(prevProps) {
     if(prevProps.requests !== this.props.requests){
       const falseReadAndExpiringRentals = this.props.rentals.filter(rental => rental.read === false && rental.status === 'expiring')

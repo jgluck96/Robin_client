@@ -14,6 +14,8 @@ class ItemCard extends Component {
   }
 
   show = item => {
+    this.props.itemShow()
+
     localStorage.setItem("currentItem", JSON.stringify(item))
     this.props.itemShow(item)
     // console.log(item);
@@ -46,7 +48,7 @@ class ItemCard extends Component {
 
     return(
       <div className="col-sm-6 mb-5">
-        <a className="card h-100 border-0 shadow"  onClick={() => this.show(this.props.item)}>
+        <a className="card h-100 border-0 shadow"  href="" onClick={() => this.show(this.props.item)}>
 
 
         <div style={{height: '170px'}} class="card-img-top overflow-hidden gradient-overlay">

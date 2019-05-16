@@ -1,13 +1,13 @@
 import React, {Component} from 'react'
-// import {homeSearch} from '../actions/homeSearch'
+import {homeSearch} from '../actions/homeSearch'
 import {connect} from 'react-redux'
+import {withRouter} from 'react-router'
 
 class HomeSearch extends Component {
 
   state = {
     itemTitle: '',
-    location: '',
-    category: ''
+    location: ''
   }
 
 
@@ -19,11 +19,11 @@ class HomeSearch extends Component {
 
   submitHandler = e => {
     e.preventDefault()
-    // this.props.homeSearch(this.state);
+    this.props.homeSearch(this.state)
+    this.props.history.push('/browse-all')
     this.setState({
       itemTitle: '',
-      location: '',
-      category: ''
+      location: ''
     })
   }
 
@@ -46,7 +46,7 @@ class HomeSearch extends Component {
                         <i class="fa fa-crosshairs"></i>
                         <span class="sr-only">City</span>
                      </label>
-                     <input onChange={this.handleChange} value={this.state.location} name="location" id="location" className="form-control border-0 shadow-0" placeholder='location'>
+                     <input onChange={this.handleChange} value={this.state.location} name="location" id="location" className="form-control border-0 shadow-0" placeholder='New York, NY'>
                      </input>
                    </div>
                   </div>
@@ -63,4 +63,4 @@ class HomeSearch extends Component {
   }
 }
 
-export default HomeSearch
+export default withRouter(connect(null, {homeSearch})(HomeSearch))

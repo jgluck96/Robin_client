@@ -69,7 +69,7 @@ class Account extends Component {
     const newReqs = this.props.requests.filter(req => req.request.accepted === null)
     return(
       <React.Fragment>
-      <Tabs style={{marginTop: '120px', width: '50%', marginLeft: '50%'}} onSelect={tabIndex => console.log(tabIndex)}>
+      <Tabs style={{marginTop: '120px', width: '50%', marginLeft: '50%', position: 'relative', float: 'right', zIndex: '2'}}>
         <TabList>
           <Tab>New Requests</Tab>
           <Tab>Accepted Requests</Tab>
@@ -79,12 +79,12 @@ class Account extends Component {
         <TabPanel>
           <PerfectScrollbar style={{height: '500px', padding: '10px', border: '1px solid #c5c5c5', width: '97%', marginTop: '0px'}}>
           {newReqs.map(req => {
-            return <RequestCard id={this.props.requests.indexOf(req)} requester={req.requesterObj} item={req.itemObj}/>
+            return <RequestCard id={this.props.requests.indexOf(req)} request={req} requester={req.requesterObj} item={req.itemObj}/>
           })}
           </PerfectScrollbar>
         </TabPanel>
         <TabPanel>
-          <PerfectScrollbar style={{height: '800px', padding: '10px', border: '1px solid #c5c5c5', width: '97%', marginTop: '0px'}}>
+          <PerfectScrollbar style={{height: '500px', padding: '10px', border: '1px solid #c5c5c5', width: '97%', marginTop: '0px'}}>
           {
             acceptedReqs.map(req => {
               return <RentalCard request={req} requester={req.requesterObj} item={req.itemObj}/>
@@ -93,7 +93,7 @@ class Account extends Component {
           </PerfectScrollbar>
         </TabPanel>
         <TabPanel>
-          <PerfectScrollbar style={{height: '800px', padding: '10px', border: '1px solid #c5c5c5', width: '97%', marginTop: '0px'}}>
+          <PerfectScrollbar style={{height: '500px', padding: '10px', border: '1px solid #c5c5c5', width: '97%', marginTop: '0px'}}>
           {
             this.props.whatIWant.map(whatIWant => {
               return <WhatIWantCard whatIWant={whatIWant} owner={whatIWant.receiverObj} item={whatIWant.itemObj}/>
@@ -103,8 +103,8 @@ class Account extends Component {
         </TabPanel>
       </Tabs>
       {this.props.user ?
-        <div style={{marginBottom: "5.7%"}}>
-        <div style={{width: '350px', height: '450px', top: '24%', left: '10%', position: 'absolute', border: '1px solid #c5c5c5'}}>
+        <div>
+        <div style={{width: '350px', height: '450px', top: '21%', left: '10%', border: '1px solid #c5c5c5', position: 'absolute', zIndex: '2'}}>
           <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
             <div  style={{paddingTop: '35px'}}>
               <img style={{width: '200px', height: '200px', borderRadius: '50%'}} src={this.props.user.img}/>
@@ -134,19 +134,19 @@ class Account extends Component {
         </div>
         {this.props.user.bio ?
           this.state.clicked ?
-          <div style={{width: '13.7%', top: '40%', left: '10%', position: 'fixed'}} class="form-group mb-5">
+          <div style={{width: '30%', top: '10%', left: '10%', position: 'relative', marginBottom: '10%'}} class="form-group mb-5">
             <label class="form-label">Bio</label>
             <textarea id="form_description" value={this.state.bio} rows='9' name="bio" className="form-control" onChange={this.changeHandler} placeholder='bio...'/>
             {this.state.bio ? <button onClick={this.saveBio} className="btn btn-primary">Save</button> : null}
           </div>
           :
-          <div style={{width: '13.7%', top: '%', left: '10%', position: 'relative'}} class="form-group mb-5">
+          <div style={{width: '70%', left: '10%', position: 'relative', marginBottom: '10%'}} class="form-group mb-5">
             <label class="form-label">Bio</label>
-            <div className="form-group" >{this.props.user.bio}</div>
-            <button style={{float: 'right'}} onClick={() => this.setState({bio: this.props.user.bio, clicked: true})} className="btn btn-primary">Edit</button>
+            <div className="form-group" style={{width: '40%'}}>{this.props.user.bio}</div>
+            <button  onClick={() => this.setState({bio: this.props.user.bio, clicked: true})} className="btn btn-primary">Edit</button>
           </div>
         :
-        <div style={{width: '13.7%', top: '40%', left: '10%', position: 'fixed'}} class="form-group mb-5">
+        <div style={{width: '90%', top: '10%', left: '40%', position: 'relative', marginBottom: '10%'}} class="form-group mb-5">
           <label  class="form-label">Bio</label>
           <textarea id="form_description" value={this.state.bio} rows='9' name="bio" className="form-control" onChange={this.changeHandler} placeholder='bio...'/>
           {this.state.bio ? <button onClick={this.saveBio} className="btn btn-primary">Save</button> : null}

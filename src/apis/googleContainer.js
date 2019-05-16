@@ -1,8 +1,8 @@
 import React from 'react'
+import {Map, InfoWindow, Marker, GoogleApiWrapper, Circle} from 'google-maps-react'
 // import Mapp from './googlemaps'
 // import {GoogleApiWrapper} from 'google-maps-react'
 // import {GoogleApiWrapper} from 'GoogleMapsReactComponent'
-import {Map, InfoWindow, Marker, GoogleApiWrapper, Circle} from 'google-maps-react'
 
 
 class Container extends React.Component {
@@ -19,8 +19,9 @@ class Container extends React.Component {
   // }
 
 
+
+
   render() {
-console.log(this.props.google);
     const points = this.props.items.map(itemObj=> {
       return { lat: itemObj.lat, lng: itemObj.lng }
     })
@@ -42,18 +43,22 @@ console.log(this.props.google);
       <div style={style}>
       <Map google={this.props.google}
       zoom={14}
+      center={this.props.searchLocation ?
+      this.props.searchLocation
+      :
+    this.props.userGeo}
       initialCenter={
-        this.props.searchResults ?
-        null
+        this.props.searchLocation ?
+        this.props.searchLocation
         :
         this.props.userGeo
       }
         // bounds={bounds}
         >
-      {
-        this.props.items.map(itemObj => {
+      {this.props.searchResults ?
+        this.props.searchResults.map(itemObj => {
           return (
-          <Marker
+          <Marker ref={this.onMarkerMounted}
           key={itemObj.id}
           title='test'
           onClick={this.onMarkerClick}
@@ -61,20 +66,25 @@ console.log(this.props.google);
           markerWithLabel={window.MarkerWithLabel}
           position={{lat: itemObj.lat, lng: itemObj.lng}}
           >
-
-          <InfoWindow
-            visible={true}
-            >
-              <div >
-                <p>Click on the ma</p>
-              </div>
-          </InfoWindow>
+          </Marker>
+          )
+        })
+        :
+        this.props.items.map(itemObj => {
+          return (
+          <Marker ref={this.onMarkerMounted}
+          key={itemObj.id}
+          title='test'
+          onClick={this.onMarkerClick}
+          name={'Current location'}
+          markerWithLabel={window.MarkerWithLabel}
+          position={{lat: itemObj.lat, lng: itemObj.lng}}
+          >
           </Marker>
           )
         })
 
       }
-
 
      </Map>
       </div>

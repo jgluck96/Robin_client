@@ -18,6 +18,7 @@ class ItemShowDesc extends Component {
       width: '30vw',
       height: '60vh'
     }
+    console.log(this.props.item);
     return(
 
       <div className='col-lg-8'>
