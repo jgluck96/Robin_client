@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import uploadcare from 'uploadcare-widget'
-import $ from 'jquery';
 
 
 class Uploader extends Component {

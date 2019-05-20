@@ -10,7 +10,6 @@ class ItemShow extends Component {
 
   componentDidMount() {
     if (localStorage.getItem('currentItem')) {
-      console.log('here');
       this.props.itemShow(JSON.parse(localStorage.getItem('currentItem')))
     }
   }

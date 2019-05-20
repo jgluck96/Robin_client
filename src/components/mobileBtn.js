@@ -18,8 +18,8 @@ import { slide as Menu } from "react-burger-menu";
 const toggleMenu = () => {
     // this.setState({menuOpen: !this.state.menuOpen})
     $(".icon").toggleClass("close")
+    $('#collshow').toggleClass("show")
   }
-
 
 
 
@@ -27,14 +27,14 @@ const toggleMenu = () => {
     export default props => {
   return (
     <React.Fragment >
-    <div onClick={() => toggleMenu()} id="wrapper">
-    <div className='circle icon'>
-    <span className="line top"></span>
-    <span className="line middle"></span>
-    <span className="line bottom"></span>
-    </div>
-    </div>
-    
+      <div onClick={() => toggleMenu()} id="wrapper">
+        <div className='circle icon'>
+          <span className="line top"></span>
+          <span className="line middle"></span>
+          <span className="line bottom"></span>
+        </div>
+      </div>
+
     </React.Fragment >
 
   );

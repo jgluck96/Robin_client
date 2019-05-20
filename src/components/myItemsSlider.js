@@ -9,7 +9,6 @@ import {connect} from 'react-redux'
 
 
   render() {
-    console.log(this.props.items);
     return(
       <Fragment>
             {
@@ -18,8 +17,8 @@ import {connect} from 'react-redux'
                 (this.props.items.length > 0 ?
                 <Fragment>
                 <div className="col-lg-4">
-                  <p class="subtitle text-sm text-primary">Other items from owner</p>
-                  <h5 class="mb-4">{this.props.showItemOwner.name}'s Items </h5>
+                  <p className="subtitle text-sm text-primary">Other items from owner</p>
+                  <h5 className="mb-4">{this.props.showItemOwner.name}'s Items </h5>
                 </div>
                   <Carousel
                   autoplay={true}

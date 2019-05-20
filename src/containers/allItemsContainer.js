@@ -19,13 +19,17 @@ class ItemsContainer extends Component {
     sortType: null
   }
 
-  componentDidMount() {
+  componentDidMount(prevState) {
     this.props.fetchItems()
-  }
-  componentDidUpdate(prevState) {
     console.log(prevState);
+  }
+  componentDidUpdate(prevState, prevProps) {
+    console.log(this.state.items);
     if (this.state.searchResults !== prevState.searchResults) {
       this.setState({searchTerm: prevState.searchTerm, searchResults: prevState.searchResults})
+    }
+    if (this.props.items !== this.state.items) {
+      this.setState({items: prevState.items})
     }
   }
 
@@ -66,7 +70,7 @@ class ItemsContainer extends Component {
         const sortDesc =this.props.items.sort((a,b) => b.rental_price - a.rental_price)
         this.setState({items: sortDesc, sortType: "Price Descending"})
       }
-
+      default:
     }
   }
 
@@ -81,12 +85,11 @@ class ItemsContainer extends Component {
   }
 
   handlePageChange = (pageNumber) => {
-    console.log(`active page is ${pageNumber}`);
     this.setState({activePage: pageNumber});
+    window.scrollTo(100,100)
   }
 
   render(){
-    console.log(this.state);
 
     // const position = [this.props.items[0].lat, this.props.items[0].lng]
     return(
@@ -95,7 +98,6 @@ class ItemsContainer extends Component {
         <div className="row" style={{marginBottom: '10%'}}>
           <div className="col-lg-6 py-4 p-xl-5">
             <FilterForm />
-            <hr className="my-4"/>
             <div className="d-flex justify-content-between align-items-center flex-column flex-md-row mb-4">
               <div className="mr-3">
                 <p className="mb-3 mb-md-0"><strong>{this.props.searchResults ? this.props.searchResults.length : this.props.items.length}</strong> results found</p>
@@ -129,15 +131,15 @@ class ItemsContainer extends Component {
         {   this.props.searchResults ?
           this.state.searchResults ?
           this.state.searchResults.slice((this.state.activePage * 8)-8,(this.state.activePage * 8)).map(itemObj => {
-            return <ItemCard key={itemObj.id} item={itemObj} title={itemObj.title} description={itemObj.description} category={itemObj.category}/>
+            return <ItemCard key={Math.random(100)} item={itemObj} title={itemObj.title} description={itemObj.description} category={itemObj.category}/>
           })
           :
           this.props.searchResults.slice((this.state.activePage * 8)-8,(this.state.activePage * 8)).map(itemObj => {
-            return <ItemCard key={itemObj.id} item={itemObj} title={itemObj.title} description={itemObj.description} category={itemObj.category}/>
+            return <ItemCard key={Math.random(100)} item={itemObj} title={itemObj.title} description={itemObj.description} category={itemObj.category}/>
           })
           :
           this.props.items.slice((this.state.activePage * 8)-8,(this.state.activePage * 8)).map(itemObj => {
-            return <ItemCard key={itemObj.id} item={itemObj} title={itemObj.title} description={itemObj.description} category={itemObj.category}/>
+            return <ItemCard key={Math.random(100)} item={itemObj} title={itemObj.title} description={itemObj.description} category={itemObj.category}/>
           })
         }
             </div>
@@ -171,6 +173,7 @@ class ItemsContainer extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log(state);
   return {
     items: state.items,
     userGeo: state.userGeo,

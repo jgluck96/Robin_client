@@ -175,7 +175,7 @@ class ListItemForm extends Component {
                     <div class="form-group">
                       <label class="form-label">Category</label>
                         <div className="btn btn-selectpicker form-control">
-                        <select onChange={this.changeHandler} id="form_type" style={{width: '100%'}} className="btn bs-placeholder" name="category" title="Categories">
+                        <select onChange={this.changeHandler} value={this.state.category} id="form_type" style={{width: '100%'}} className="btn bs-placeholder" name="category" title="Categories">
                           <option value></option>
                           <option value="Antiques">Antiques</option>
                           <option value="Automotive">Automotive</option>

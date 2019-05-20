@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import { NavLink } from "react-router-dom";
 // import ReactDOM from 'react-dom'
-// import MobileBtn from './mobileBtn'
+import MobileBtn from './mobileBtn'
+import { slide as Menu } from "react-burger-menu";
 import { connect } from 'react-redux'
 import { openLoginModal, openSignupModal } from '../actions/modal'
 import { logout } from '../actions/users'
@@ -69,7 +70,6 @@ class NavBar extends Component {
   // }
 
   render(){
-    console.log("State in Render", this.props)
     return(
       <div>
       <header className='header'>
@@ -80,6 +80,10 @@ class NavBar extends Component {
                 <img className='imgg' src="https://i.ibb.co/TTZVJWn/logo.png" alt='logo'></img>
               </a>
             </div>
+            <span className="navbar-toggler navbar-toggler-right collapsed">
+              <MobileBtn />
+            </span>
+              <div id="collshow" className="navbar-collapse collapse">
                   <ul className="navbar-nav ml-auto">
                     <li className='nav-item'>
                       <NavLink className="nav-link" to='/'>
@@ -87,7 +91,7 @@ class NavBar extends Component {
                       </NavLink>
                     </li>
                     <li className='nav-item'>
-                    <div className='nav-item mt-3 mt-lg-0 ml-lg-3 d-lg-none d-xl-inline-block'>
+                    <div className='nav-item mt-3 mt-lg-0 ml-lg-3 d-xl-inline-block'>
                     <NavLink className="btn btn-primary" to='/create-listing'>
                     ADD LISTING
                     </NavLink>
@@ -133,6 +137,7 @@ class NavBar extends Component {
 
                     }
                   </ul>
+              </div>
                   </div>
                 </nav>
                 </header>

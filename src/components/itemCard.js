@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 // import { connect } from 'react-redux';
 import {withRouter} from 'react-router'
 import {itemShow} from '../actions/items'
+import $ from 'jquery'
 // import {showItemOwner} from '../actions/items'
 
 import {connect} from 'react-redux'
@@ -34,6 +35,17 @@ class ItemCard extends Component {
     }
   }
 
+  cardHover = (e) => {
+    console.log(e.target)
+    $(`#${this.props.item.id}`).toggleClass("item-card-hover")
+    $(`#${this.props.item.id} span`).toggleClass("item-card-text-hover")
+  }
+  cardLeave = () => {
+    console.log(this.props.item.id)
+    $(`#${this.props.item.id}`).toggleClass("item-card-hover")
+    $(`#${this.props.item.id} span`).toggleClass("item-card-text-hover")
+
+  }
 
   render(){
     // console.log(this.props.item.reviews)
@@ -48,7 +60,7 @@ class ItemCard extends Component {
 
     return(
       <div className="col-sm-6 mb-5">
-        <a className="card h-100 border-0 shadow"  href="" onClick={() => this.show(this.props.item)}>
+        <a onMouseEnter={this.cardHover} onMouseLeave={this.cardLeave} className="card h-100 border-0 shadow"  href="" onClick={() => this.show(this.props.item)}>
 
 
         <div style={{height: '170px'}} class="card-img-top overflow-hidden gradient-overlay">

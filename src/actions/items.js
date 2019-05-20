@@ -24,7 +24,6 @@ export const addListing = (item, userId, photos) => {
       localStorage.setItem("currentItem", JSON.stringify(itemObj))
       dispatch({type: 'SHOW_ITEM', item: itemObj})
 
-      console.log(userId);
       fetch('http://localhost:3000/own_items',{
         method: 'POST',
         headers: {
@@ -48,7 +47,7 @@ export const itemShow = item => {
     fetch('http://localhost:3000/users')
       .then(resp => resp.json())
       .then(users => {
-        
+
         const foundUser = users.find(user => user.own_items.includes(user.own_items.find(ownItem => ownItem.item_id === item.id)))
         dispatch({type: 'SHOW_ITEM_OWNER', payload: foundUser})
         dispatch({type: 'SHOW_ITEM', item: item})

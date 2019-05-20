@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 // import ReactDOM from 'react-dom';
 import './App.css';
 import NavBar from './components/navBar'
-import { BrowserRouter as Router, Route, Link, Switch, withRouter } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from './pages/home'
 import ListItem from './pages/listItem'
 import AccountPage from './pages/accountPage'
@@ -33,19 +33,22 @@ class App extends Component {
 
     if (localStorage.getItem('token')) {
       this.props.autoLogin()
-      // if (this.props.user) {
+      if (this.props.user) {
         setTimeout(() => {
           this.props.fetchWhatIWant(this.props.user.id)
           this.props.fetchRequests(this.props.user.id)
           this.props.fetchMyRentals(this.props.user.id)
         }, 1000 )
-      // }
+      }
     }
   }
 
-  // componentDidUpdate(){
-  //   console.log('in nav cdm');
-  // }
+  componentDidUpdate(){
+    this.props.fetchWhatIWant(this.props.user.id)
+    this.props.fetchRequests(this.props.user.id)
+    this.props.fetchMyRentals(this.props.user.id)
+    // console.log(this.p);
+  }
 
 
 

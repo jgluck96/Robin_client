@@ -18,7 +18,6 @@ class ItemShowDesc extends Component {
       width: '30vw',
       height: '60vh'
     }
-    console.log(this.props.item);
     return(
 
       <div className='col-lg-8'>
@@ -57,14 +56,14 @@ class ItemShowDesc extends Component {
                 <PerfectScrollbar style={{height: '550px'}}>
                 <div>
                   {this.props.item.reviews.map(review => {
-                    return <ItemReview review={review} userReview={review.user}/>
+                    return <ItemReview key={review.id} review={review} userReview={review.user}/>
                   })}
                 </div>
                 </PerfectScrollbar>
               :
               <div>
               {this.props.item.reviews.slice(0,3).map(review => {
-                return <ItemReview review={review} userReview={review.user}/>
+                return <ItemReview key={review.id} review={review} userReview={review.user}/>
               })}
                 <div className="py-5">
                   <button onClick={() => this.setState({clicked: true})} type="button" className="btn btn-outline-primary">See All Reviews</button>

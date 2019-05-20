@@ -44,7 +44,6 @@ class RequestCard extends Component {
     )
     .then(this.props.fetchWhatIWant(this.props.user.id))
     .then(() => {
-      console.log(this.props.user.funds + findRequest.request.subtotal)
       fetch(`http://localhost:3000/users/${this.props.user.id}`,{
         method: 'PATCH',
         headers: {

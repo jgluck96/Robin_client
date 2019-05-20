@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import Loading from 'react-loading-components';
 import {withRouter} from 'react-router'
 import {itemShow} from '../actions/items'
+import { fetchItems } from '../actions/items'
 
 
  class Uploaded extends Component {
@@ -14,8 +15,11 @@ import {itemShow} from '../actions/items'
    //   this.props.history.push('/item-show')
    // }
 
+   componentDidMount(){
+     this.props.fetchItems()
+   }
+
   render(){
-    console.log(this.props.user);
     return(
       <div style={{marginBottom: '-6.5%'}}>
       {this.props.user ?
@@ -48,4 +52,4 @@ const mapStateToProps = state => {
     user: state.user
   }
 }
-export default withRouter(connect(mapStateToProps, {itemShow})(Uploaded))
+export default withRouter(connect(mapStateToProps, {itemShow, fetchItems})(Uploaded))

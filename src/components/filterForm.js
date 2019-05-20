@@ -5,7 +5,7 @@ class FilterForm extends Component {
     return(
       <React.Fragment>
       <h2 className="mb-4">Rent in Manhattan, NY</h2>
-        <hr />
+        <hr style={{paddingTop:'1px'}}/>
         </React.Fragment>
     )
   }

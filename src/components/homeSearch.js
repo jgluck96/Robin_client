@@ -42,9 +42,9 @@ class HomeSearch extends Component {
                   </div>
                   <div className="col-lg-4 d-flex align-items-center form-group">
                     <div className="input-label-absolute input-label-absolute-right w-100">
-                       <label for="location" class="label-absolute">
-                        <i class="fa fa-crosshairs"></i>
-                        <span class="sr-only">City</span>
+                       <label className="label-absolute">
+                        <i className="fa fa-crosshairs"></i>
+                        <span className="sr-only">City</span>
                      </label>
                      <input onChange={this.handleChange} value={this.state.location} name="location" id="location" className="form-control border-0 shadow-0" placeholder='New York, NY'>
                      </input>

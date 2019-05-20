@@ -61,7 +61,6 @@ class Review extends Component {
     })
       .then(res => res.json())
       .then(data => {
-          console.log(data);
       })
       .then(this.props.history.push('/')).then(() => {
         this.props.closeModal()
@@ -74,7 +73,6 @@ class Review extends Component {
   }
 
   render(){
-    console.log(this.state);
     return(
       <React.Fragment>
       <div style={{marginTop: '12%'}}>

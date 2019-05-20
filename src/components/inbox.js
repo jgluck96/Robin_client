@@ -52,7 +52,6 @@ class Inbox extends Component {
 
 
   render(){
-    console.log(this.state.falseStuff);
     if (this.props.notifs) {
       const falseStuff = [].concat.apply([], [this.props.notifs.falseReadRequests, this.props.notifs.falseReadRentals, this.props.notifs.falseReadAndExpiredRentals, this.props.notifs.falseWhatIWant])
       if (!this.state.falseStuff) {

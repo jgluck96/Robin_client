@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {itemShow} from '../actions/items'
+// import {itemShow} from '../actions/items'
 import {connect} from 'react-redux'
 import {openReviewModal} from '../actions/modal'
 import {withRouter} from 'react-router'
@@ -8,7 +8,6 @@ class Message extends Component {
 
   show = item => {
     localStorage.setItem("currentItem", JSON.stringify(item))
-    console.log(item);
     this.props.itemShow(item)
     this.props.history.push(`/item-show/${item.id}`)
   }

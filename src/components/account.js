@@ -10,11 +10,11 @@ import WhatIWantCard from './whatIWantCard'
 import Loading from 'react-loading-components';
 // import Avatar from 'react-avatar-edit'
 import Uploader from './Uploader';
-import uploadcare from "uploadcare-widget"
+// import uploadcare from "uploadcare-widget"
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
 import {withRouter} from 'react-router'
-import {Redirect} from 'react-router-dom'
+// import {Redirect} from 'react-router-dom'
 import 'react-perfect-scrollbar/dist/css/styles.css'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 
@@ -63,8 +63,6 @@ class Account extends Component {
 
 
   render(){
-    console.log(this.state);
-    console.log('in account', this.props);
     const acceptedReqs = this.props.requests.filter(req => req.request.accepted === true)
     const newReqs = this.props.requests.filter(req => req.request.accepted === null)
     return(
@@ -107,7 +105,7 @@ class Account extends Component {
         <div style={{width: '350px', height: '450px', top: '21%', left: '10%', border: '1px solid #c5c5c5', position: 'absolute', zIndex: '2'}}>
           <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
             <div  style={{paddingTop: '35px'}}>
-              <img style={{width: '200px', height: '200px', borderRadius: '50%'}} src={this.props.user.img}/>
+              <img style={{width: '200px', height: '200px', borderRadius: '50%'}} alt='' src={this.props.user.img}/>
             </div>
             <div style={{marginTop: '40px'}}>
               <Uploader
@@ -135,19 +133,19 @@ class Account extends Component {
         {this.props.user.bio ?
           this.state.clicked ?
           <div style={{width: '30%', top: '10%', left: '10%', position: 'relative', marginBottom: '10%'}} class="form-group mb-5">
-            <label class="form-label">Bio</label>
+            <label className="form-label">Bio</label>
             <textarea id="form_description" value={this.state.bio} rows='9' name="bio" className="form-control" onChange={this.changeHandler} placeholder='bio...'/>
             {this.state.bio ? <button onClick={this.saveBio} className="btn btn-primary">Save</button> : null}
           </div>
           :
-          <div style={{width: '70%', left: '10%', position: 'relative', marginBottom: '10%'}} class="form-group mb-5">
-            <label class="form-label">Bio</label>
+          <div style={{width: '70%', left: '10%', position: 'relative', marginBottom: '10%'}} className="form-group mb-5">
+            <label className="form-label">Bio</label>
             <div className="form-group" style={{width: '40%'}}>{this.props.user.bio}</div>
             <button  onClick={() => this.setState({bio: this.props.user.bio, clicked: true})} className="btn btn-primary">Edit</button>
           </div>
         :
-        <div style={{width: '90%', top: '10%', left: '40%', position: 'relative', marginBottom: '10%'}} class="form-group mb-5">
-          <label  class="form-label">Bio</label>
+        <div style={{width: '90%', top: '10%', left: '40%', position: 'relative', marginBottom: '10%'}} className="form-group mb-5">
+          <label  className="form-label">Bio</label>
           <textarea id="form_description" value={this.state.bio} rows='9' name="bio" className="form-control" onChange={this.changeHandler} placeholder='bio...'/>
           {this.state.bio ? <button onClick={this.saveBio} className="btn btn-primary">Save</button> : null}
         </div>
@@ -164,7 +162,6 @@ class Account extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     requests: state.requests,
     whatIWant: state.whatIWant,

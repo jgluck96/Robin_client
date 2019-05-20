@@ -43,12 +43,12 @@ export default class easyBookingSection extends Component {
           </div>
         </div>
       </section>
-      <section class="py-7 position-relative dark-overlay">
-        <img src="https://d19m59y37dris4.cloudfront.net/directory/1-1/img/photo/photo-1497436072909-60f360e1d4b1.jpg" alt="" class="bg-image" />
-        <div class="container">
-          <div class="overlay-content text-white py-lg-5">
-            <h3 class="display-3 font-weight-bold text-serif text-shadow mb-5">Ready to rent with confidence?</h3>
-            <a href="/browse-all" class="btn btn-light">Get started</a>
+      <section className="py-7 position-relative dark-overlay">
+        <img src="https://d19m59y37dris4.cloudfront.net/directory/1-1/img/photo/photo-1497436072909-60f360e1d4b1.jpg" alt="" className="bg-image" />
+        <div className="container">
+          <div className="overlay-content text-white py-lg-5">
+            <h3 className="display-3 font-weight-bold text-serif text-shadow mb-5">Ready to rent with confidence?</h3>
+            <a href="/browse-all" className="btn btn-light">Get started</a>
           </div>
         </div>
       </section>

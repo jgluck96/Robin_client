@@ -5,7 +5,7 @@ export const homeSearch = (data) => {
         .then(resp => resp.json())
         .then(coord => {
           // if empty array and nothong found then either alert or set default location to ip
-          if (coord.Items > 0){
+          if (coord.Items.length > 0){
             const searchLocation = {lat: coord.Items[0].Latitude, lng: coord.Items[0].Longitude}
             dispatch({type: 'SEARCH_LOCATION', payload: searchLocation})
           }
