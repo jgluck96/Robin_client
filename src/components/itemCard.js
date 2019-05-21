@@ -36,12 +36,10 @@ class ItemCard extends Component {
   }
 
   cardHover = (e) => {
-    console.log(e.target)
     $(`#${this.props.item.id}`).toggleClass("item-card-hover")
     $(`#${this.props.item.id} span`).toggleClass("item-card-text-hover")
   }
   cardLeave = () => {
-    console.log(this.props.item.id)
     $(`#${this.props.item.id}`).toggleClass("item-card-hover")
     $(`#${this.props.item.id} span`).toggleClass("item-card-text-hover")
 

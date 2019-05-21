@@ -4,13 +4,13 @@ export const homeSearch = (data) => {
       fetch(`https://api.addressy.com/Geocoding/International/Geocode/v1.10/json3.ws?Key=CE46-DY64-EB73-HF91&Country=US&Location=${data.location}`)
         .then(resp => resp.json())
         .then(coord => {
-          // if empty array and nothong found then either alert or set default location to ip
           if (coord.Items.length > 0){
             const searchLocation = {lat: coord.Items[0].Latitude, lng: coord.Items[0].Longitude}
             dispatch({type: 'SEARCH_LOCATION', payload: searchLocation})
           }
         })
-    } else if (data.itemTitle) {
+    } if (data.itemTitle) {
+      console.log('here in itemtitle');
       fetch('http://localhost:3000/items')
       .then(res => res.json())
       .then(items => {

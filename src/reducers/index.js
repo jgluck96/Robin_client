@@ -17,6 +17,8 @@ import falseNotifs from './falseNotifs'
 import searchLocation from './searchLocation'
 import searchResults from './searchResults'
 import searchTerm from './searchTerm'
+import fetchMapItems from './fetchMapItems'
+import fetchMapItemsSearch from './fetchMapItemsSearch'
 
 
 
@@ -38,5 +40,7 @@ export default combineReducers({
   falseNotifs,
   searchLocation,
   searchResults,
-  searchTerm
+  searchTerm,
+  fetchMapItems,
+  fetchMapItemsSearch
 })

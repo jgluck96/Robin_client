@@ -19,14 +19,13 @@ class ItemsContainer extends Component {
     sortType: null
   }
 
-  componentDidMount(prevState) {
+  componentDidMount() {
     this.props.fetchItems()
-    console.log(prevState);
   }
   componentDidUpdate(prevState, prevProps) {
-    console.log(this.state.items);
-    if (this.state.searchResults !== prevState.searchResults) {
-      this.setState({searchTerm: prevState.searchTerm, searchResults: prevState.searchResults})
+    console.log(this.state.searchResults);
+    if (this.state.searchResults !== prevState.fetchMapItemsSearch) {
+      this.setState({searchTerm: prevState.searchTerm, searchResults: prevState.mapItemsSearch})
     }
     if (this.props.items !== this.state.items) {
       this.setState({items: prevState.items})
@@ -36,38 +35,38 @@ class ItemsContainer extends Component {
   sort = e => {
     switch (e.target.value) {
       case "Price Ascending":
-        if (this.props.searchResults) {
-          const sortSAsc = this.props.searchResults.sort((a,b) => a.rental_price - b.rental_price)
+        if (this.props.MapItemsSearch) {
+          const sortSAsc = this.props.MapItemsSearch.sort((a,b) => a.rental_price - b.rental_price)
           this.setState({searchResults: sortSAsc, sortType: "Price Ascending"})
       } else {
-        const sortAsc = this.props.items.sort((a,b) => a.rental_price - b.rental_price)
+        const sortAsc = this.props.MapResults.sort((a,b) => a.rental_price - b.rental_price)
         this.setState({items: sortAsc, sortType: "Price Ascending"})
         }
         break
       case "Most Popular":
-      if (this.props.searchResults) {
-        const sortSMP = this.props.searchResults.sort((a,b) => b.rentals.length - a.rentals.length)
+      if (this.props.MapItemsSearch) {
+        const sortSMP = this.props.MapItemsSearch.sort((a,b) => b.rentals.length - a.rentals.length)
         this.setState({searchResults: sortSMP, sortType: "Most Popular"})
       } else {
-        const sortMP = this.props.items.sort((a,b) => b.rentals.length - a.rentals.length)
+        const sortMP = this.props.MapResults.sort((a,b) => b.rentals.length - a.rentals.length)
         this.setState({items: sortMP, sortType: "Most Popular"})
       }
         break
       case "Rating":
-      if (this.props.searchResults) {
-        const sortSRating = this.props.searchResults.sort((a,b) => (b.reviews.length !== 0 ? Math.ceil((b.reviews.map(review => review.rating).reduce((total, num) => total + num))/b.reviews.length) : 0) - (a.reviews.length !== 0 ? Math.ceil((a.reviews.map(review => review.rating).reduce((total, num) => total + num))/a.reviews.length) : 0))
+      if (this.props.MapItemsSearch) {
+        const sortSRating = this.props.MapItemsSearch.sort((a,b) => (b.reviews.length !== 0 ? Math.ceil((b.reviews.map(review => review.rating).reduce((total, num) => total + num))/b.reviews.length) : 0) - (a.reviews.length !== 0 ? Math.ceil((a.reviews.map(review => review.rating).reduce((total, num) => total + num))/a.reviews.length) : 0))
         this.setState({searchResults: sortSRating, sortType: 'Rating'})
       } else {
-        const sortRating = this.props.items.sort((a,b) => (b.reviews.length !== 0 ? Math.ceil((b.reviews.map(review => review.rating).reduce((total, num) => total + num))/b.reviews.length) : 0) - (a.reviews.length !== 0 ? Math.ceil((a.reviews.map(review => review.rating).reduce((total, num) => total + num))/a.reviews.length) : 0))
+        const sortRating = this.props.MapResults.sort((a,b) => (b.reviews.length !== 0 ? Math.ceil((b.reviews.map(review => review.rating).reduce((total, num) => total + num))/b.reviews.length) : 0) - (a.reviews.length !== 0 ? Math.ceil((a.reviews.map(review => review.rating).reduce((total, num) => total + num))/a.reviews.length) : 0))
         this.setState({items: sortRating, sortType: 'Rating'})
       }
         break
       case "Price Descending":
-      if (this.props.searchResults) {
-        const sortSDesc =this.props.searchResults.sort((a,b) => b.rental_price - a.rental_price)
+      if (this.props.MapItemsSearch) {
+        const sortSDesc =this.props.MapItemsSearch.sort((a,b) => b.rental_price - a.rental_price)
         this.setState({searchResults: sortSDesc, sortType: "Price Descending"})
       } else {
-        const sortDesc =this.props.items.sort((a,b) => b.rental_price - a.rental_price)
+        const sortDesc =this.props.MapResults.sort((a,b) => b.rental_price - a.rental_price)
         this.setState({items: sortDesc, sortType: "Price Descending"})
       }
       default:
@@ -100,7 +99,7 @@ class ItemsContainer extends Component {
             <FilterForm />
             <div className="d-flex justify-content-between align-items-center flex-column flex-md-row mb-4">
               <div className="mr-3">
-                <p className="mb-3 mb-md-0"><strong>{this.props.searchResults ? this.props.searchResults.length : this.props.items.length}</strong> results found</p>
+                <p className="mb-3 mb-md-0"><strong>{this.props.MapItemsSearch ? this.props.MapItemsSearch.length : this.props.MapResults ? this.props.MapResults.length : null}</strong> results found</p>
               </div>
               <div>
                 <label className="form-label mr-2">Sort by</label>
@@ -128,27 +127,27 @@ class ItemsContainer extends Component {
               : null
             }
             <div className="row">
-        {   this.props.searchResults ?
+        {   this.props.MapItemsSearch ?
           this.state.searchResults ?
           this.state.searchResults.slice((this.state.activePage * 8)-8,(this.state.activePage * 8)).map(itemObj => {
             return <ItemCard key={Math.random(100)} item={itemObj} title={itemObj.title} description={itemObj.description} category={itemObj.category}/>
           })
           :
-          this.props.searchResults.slice((this.state.activePage * 8)-8,(this.state.activePage * 8)).map(itemObj => {
+          this.props.MapItemsSearch.slice((this.state.activePage * 8)-8,(this.state.activePage * 8)).map(itemObj => {
             return <ItemCard key={Math.random(100)} item={itemObj} title={itemObj.title} description={itemObj.description} category={itemObj.category}/>
           })
           :
-          this.props.items.slice((this.state.activePage * 8)-8,(this.state.activePage * 8)).map(itemObj => {
+          this.props.mapItems ? this.props.mapItems.slice((this.state.activePage * 8)-8,(this.state.activePage * 8)).map(itemObj => {
             return <ItemCard key={Math.random(100)} item={itemObj} title={itemObj.title} description={itemObj.description} category={itemObj.category}/>
-          })
+          }) : null
         }
             </div>
-            <div>
+            <div style={{marginTop: '25%'}}>
             <Pagination
               activePage={this.state.activePage}
               itemsCountPerPage={8}
-              totalItemsCount={this.state.items.length}
-              pageRangeDisplayed={this.state.items.length/8}
+              totalItemsCount={this.props.mapItems ? this.props.mapItems.length : null}
+              pageRangeDisplayed={this.props.mapItems ? this.props.mapItems.length/8 : null}
               onChange={this.handlePageChange}
               itemClass={'page-item'}
               linkClass={'page-link'}
@@ -173,13 +172,15 @@ class ItemsContainer extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     items: state.items,
     userGeo: state.userGeo,
     searchResults: state.searchResults,
     searchLocation: state.searchLocation,
-    searchTerm: state.searchTerm
+    searchTerm: state.searchTerm,
+    mapItems: state.fetchMapItems,
+    MapResults: state.fetchMapItems,
+    MapItemsSearch: state.fetchMapItemsSearch
   }
 }
 

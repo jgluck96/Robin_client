@@ -10,6 +10,28 @@ export const fetchItems = () => {
   }
 }
 
+export const fetchMapItems = (idArray) => {
+  return (dispatch) => {
+    fetch('http://localhost:3000/items')
+    .then(res => res.json())
+    .then(items => {
+      const mapItems = idArray.map(id => items.find(item => item.id === id))
+      dispatch({type: 'FETCH_MAP_ITEMS', payload: mapItems})
+    })
+  }
+}
+
+export const fetchMapItemsSearch = (idArray) => {
+  return (dispatch) => {
+    fetch('http://localhost:3000/items')
+    .then(res => res.json())
+    .then(items => {
+      const mapItemsSearch = idArray.map(id => items.find(item => item.id === id))
+      dispatch({type: 'FETCH_MAP_ITEMS_SEARCH', payload: mapItemsSearch})
+    })
+  }
+}
+
 export const addListing = (item, userId, photos) => {
   return (dispatch) => {
     fetch('http://localhost:3000/items', {

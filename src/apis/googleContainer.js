@@ -6,58 +6,89 @@ import {Map, InfoWindow, Marker, GoogleApiWrapper, Circle} from 'google-maps-rea
 import Loading from 'react-loading-components'
 import GoogleMapReact from 'google-map-react'
 import $ from 'jquery'
+import {fetchMapItems, fetchMapItemsSearch} from '../actions/items'
+import {connect} from 'react-redux'
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 
 class Container extends React.Component {
 
-  state = {
-    lat: '',
-    lng: ''
+  // state = {
+  //   markers: []
+  // }
+
+  // componentDidUpdate(prevState){
+  //   const allMarkers = document.querySelectorAll(".item-map-pointer")
+  //   console.log(allMarkers);
+  //   console.log(this.state);
+  //   // if (this.state.markers !== allMarkers) {
+  //   //   this.isInView()
+  //   // }
+  // }
+
+  onGoogleApiLoaded = () => {
+    console.log('onGoogleApiLoaded');
+    this.isInView()
+    // console.log(document.querySelectorAll(".item-map-pointer"));
   }
 
-  // componentDidMount() {
-  //   navigator.geolocation.getCurrentPosition((position) => {
-  //     this.setState({lat: position.coords.latitude, lng: position.coords.longitude})
-  //   })
-  // }
+  isInView = () => {
+    const itemIds = []
+    const arr = document.querySelectorAll(".item-map-pointer")
+    // this.setState({markers: arr})
+    // console.log(arr);
+    // console.log($(document).scrollTop() + $(window).height());
+    for (let i = 0; i < arr.length; i++) {
+    const docViewTop = $(window).scrollTop();
+    const docViewBottom = docViewTop + $(window).height();
 
-  // moving = (props,map) => {
-  //   const bounds = new this.props.google.maps.LatLngBounds()
-  // }
+    const elemTop = $(arr[i]).offset().top;
+    const elemBottom = elemTop + $(arr[i]).height();
 
-  // onMarkerMounted = c => {
-  //   console.log(c);
-  // }
+        if ((elemBottom >= docViewTop) && (elemTop <= docViewBottom)){
+          itemIds.push(parseInt(arr[i].id))
+          console.log('push');
+        }
+    }
 
-//   isInView = () => {
-//     const arr = document.querySelectorAll("img[src='https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2_hdpi.png']")
-//     console.log(arr);
-//     for (let i = 0; i < arr.length; i++) {
-//     var docViewTop = $(window).scrollTop();
-//     var docViewBottom = docViewTop + $(window).height();
+    if (itemIds.length > 0) {
+      console.log(itemIds)
+      if (this.props.searchResults) {
+        this.props.fetchMapItemsSearch(itemIds)
+      } else {
+        this.props.fetchMapItems(itemIds)
+
+      }
+    } else {
+      this.props.fetchMapItems([])
+      // this.props.fetchMapItemsSearch([])
+
+    }
+}
+
+// onGoogleApiLoaded = ({map, maps}) => {
+//   this.infoWindow = new maps.InfoWindow()
+// }
 //
-//     var elemTop = $(arr[i]).offset().top;
-//     var elemBottom = elemTop + $(arr[i]).height();
-//
-//         if ((elemBottom >= docViewTop) && (elemTop <= docViewBottom)){
-//           console.log(arr[i]);
-//         }
-//     }
+// infoWindow = item => {
+//   console.log(item);
+//   return (
+//     <div className="infoWindow">
+//       <div>
+//         item.title
+//       </div>
+//     </div>
+//   )
 // }
 
 
   render() {
-    // const points = this.props.items.map(itemObj=> {
-    //   return { lat: itemObj.lat, lng: itemObj.lng }
-    // })
-    //
-    // const bounds = new this.props.google.maps.LatLngBounds()
-    //
-    // for (var i = 0; i < points.length; i++) {
-    //   bounds.extend(points[i])}
-    //
+
+    // const allMarkers = document.querySelectorAll(".item-map-pointer")
+    // if (this.state.markers !== allMarkers) {
+    //   this.isInView()
+    // }
 
     const style = {
       width: '50vw',
@@ -74,8 +105,9 @@ class Container extends React.Component {
     return (
       <div style={style}>
       <GoogleMapReact google={this.props.google}
-      zoom={10}
-      onDragend={this.isInView}
+      zoom={11}
+      onChange={this.isInView}
+      onGoogleApiLoaded={setTimeout(() => this.onGoogleApiLoaded(), 200)} //instead of just this.onGoogleApiLoaded//
       center={this.props.searchLocation ?
       this.props.searchLocation
       :
@@ -95,7 +127,6 @@ class Container extends React.Component {
           className="item-map-pointer"
           key={itemObj.id}
           id={itemObj.id}
-          onClick={this.onMarkerClick}
           lat={parseFloat(itemObj.lat.toFixed(4).toString() + (Math.random() * 1000))}
           lng={parseFloat(itemObj.lng.toFixed(4).toString() + (Math.random() * 1000))}
           text='marker'
@@ -133,6 +164,12 @@ class Container extends React.Component {
   }
 }
 
-export default GoogleApiWrapper({
+const mapStateToProps = state => {
+  return {
+    searchResults: state.searchResults
+  }
+}
+
+export default connect(mapStateToProps, {fetchMapItems, fetchMapItemsSearch})(GoogleApiWrapper({
   apiKey: 'AIzaSyAoWjEeNWpF5PuTdxlaBj3Mx3h9Qtfp24w'
-})(Container)
+})(Container))
