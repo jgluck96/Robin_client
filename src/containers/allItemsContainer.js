@@ -77,12 +77,6 @@ class ItemsContainer extends Component {
     this.setState({searchResults: this.props.searchResults})
   }
 
-  reset = () => {
-    // this.setState({items: null, sortType: null})
-    // this.setState({items: this.props.items, sortType: null})
-    window.location.reload()
-  }
-
   handlePageChange = (pageNumber) => {
     this.setState({activePage: pageNumber});
     window.scrollTo(100,100)

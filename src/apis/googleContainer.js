@@ -14,28 +14,13 @@ const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 class Container extends React.Component {
 
-  // state = {
-  //   markers: []
-  // }
+  componentDidUpdate(prevState){
+    if (prevState.fetchMapItems !== this.props.mappedItems) {
+      setTimeout(() => this.isInView(), 500)
 
-  // componentDidUpdate(prevState){
-  //   const allMarkers = document.querySelectorAll(".item-map-pointer")
-  //   console.log(allMarkers);
-  //   console.log(this.state);
-  //   // if (this.state.markers !== allMarkers) {
-  //   //   this.isInView()
-  //   // }
-  // }
-
-
-//   renderMarkers = (map, maps) => {
-//   let marker = new maps.Marker({
-//     position: myLatLng,
-//     map,
-//     title: 'Hello World!'
-//   });
-// }
-
+    }
+    // console.log(prevState.fetchMapItems);
+  }
 
   onGoogleApiLoaded = (map, maps) => {
     console.log(this._map);
@@ -49,15 +34,8 @@ class Container extends React.Component {
 
   isInView = () => {
     console.log(this._map.props);
-    // fetch(`https://api.opencagedata.com/geocode/v1/json?q=${this.props.google.map.center.lat()}+${this.props.google.map.center.lng()}&key=91433f02b4924a6eb4e752a3ec9d7db9`)
-    // .then(resp => resp.json())
-    // .then(data => this.props.mapCityState({city: data.results[0].components.city, state: data.results[0].components.state_code}))
-
     const itemIds = []
     const arr = document.querySelectorAll(".item-map-pointer")
-    // this.setState({markers: arr})
-    // console.log(arr);
-    // console.log($(document).scrollTop() + $(window).height());
     for (let i = 0; i < arr.length; i++) {
     const docViewTop = $(window).scrollTop();
     const docViewBottom = docViewTop + $(window).height();
@@ -84,28 +62,8 @@ class Container extends React.Component {
     }
 }
 
-// onGoogleApiLoaded = ({map, maps}) => {
-//   this.infoWindow = new maps.InfoWindow()
-// }
-//
-// infoWindow = item => {
-//   console.log(item);
-//   return (
-//     <div className="infoWindow">
-//       <div>
-//         item.title
-//       </div>
-//     </div>
-//   )
-// }
-
-
   render() {
 
-    // const allMarkers = document.querySelectorAll(".item-map-pointer")
-    // if (this.state.markers !== allMarkers) {
-    //   this.isInView()
-    // }
 
     const style = {
       width: '50vw',
