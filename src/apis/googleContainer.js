@@ -33,19 +33,26 @@ class Container extends React.Component {
   }
 
   isInView = () => {
-    console.log(this._map.props);
+    // console.log(this._map.props);
     const itemIds = []
     const arr = document.querySelectorAll(".item-map-pointer")
     for (let i = 0; i < arr.length; i++) {
-    const docViewTop = $(window).scrollTop();
-    const docViewBottom = docViewTop + $(window).height();
+      const width = $(window).width()
+      console.log(width);
+      const docViewLeft = $(window).scrollLeft() + width/2
+      const docViewRight = width - $(window).scrollLeft()
+      const elemWidth = $(arr[i]).offset().left + width/30
+      const docViewTop = $(window).scrollTop();
+      const docViewBottom = docViewTop + $(window).height();
+      const elemTop = $(arr[i]).offset().top;
+      const elemBottom = elemTop + $(arr[i]).height();
 
-    const elemTop = $(arr[i]).offset().top;
-    const elemBottom = elemTop + $(arr[i]).height();
-
-        if ((elemBottom >= docViewTop) && (elemTop <= docViewBottom)){
+        if ((elemBottom >= docViewTop) && (elemTop <= docViewBottom) && (elemWidth >= docViewLeft) && (elemWidth <= docViewRight)){
           itemIds.push(parseInt(arr[i].id))
+
+
         }
+
     }
 
     if (itemIds.length > 0) {
