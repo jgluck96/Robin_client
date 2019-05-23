@@ -19,6 +19,7 @@ import searchResults from './searchResults'
 import searchTerm from './searchTerm'
 import fetchMapItems from './fetchMapItems'
 import fetchMapItemsSearch from './fetchMapItemsSearch'
+import mapCityState from './mapCityState'
 
 
 
@@ -42,5 +43,6 @@ export default combineReducers({
   searchResults,
   searchTerm,
   fetchMapItems,
-  fetchMapItemsSearch
+  fetchMapItemsSearch,
+  mapCityState
 })

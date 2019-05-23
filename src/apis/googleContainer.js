@@ -6,7 +6,7 @@ import {Map, InfoWindow, Marker, GoogleApiWrapper, Circle} from 'google-maps-rea
 import Loading from 'react-loading-components'
 import GoogleMapReact from 'google-map-react'
 import $ from 'jquery'
-import {fetchMapItems, fetchMapItemsSearch} from '../actions/items'
+import {fetchMapItems, fetchMapItemsSearch, mapCityState} from '../actions/items'
 import {connect} from 'react-redux'
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
@@ -27,13 +27,32 @@ class Container extends React.Component {
   //   // }
   // }
 
-  onGoogleApiLoaded = () => {
-    console.log('onGoogleApiLoaded');
+
+//   renderMarkers = (map, maps) => {
+//   let marker = new maps.Marker({
+//     position: myLatLng,
+//     map,
+//     title: 'Hello World!'
+//   });
+// }
+
+
+  onGoogleApiLoaded = (map, maps) => {
+    console.log(this._map);
+
+    fetch(`https://api.opencagedata.com/geocode/v1/json?q=${map.center.lat()}+${map.center.lng()}&key=91433f02b4924a6eb4e752a3ec9d7db9`)
+    .then(resp => resp.json())
+    .then(data => this.props.mapCityState({city: data.results[0].components.city, state: data.results[0].components.state_code}))
     this.isInView()
-    // console.log(document.querySelectorAll(".item-map-pointer"));
+    console.log(document.querySelectorAll(".item-map-pointer"))
   }
 
   isInView = () => {
+    console.log(this._map.props);
+    // fetch(`https://api.opencagedata.com/geocode/v1/json?q=${this.props.google.map.center.lat()}+${this.props.google.map.center.lng()}&key=91433f02b4924a6eb4e752a3ec9d7db9`)
+    // .then(resp => resp.json())
+    // .then(data => this.props.mapCityState({city: data.results[0].components.city, state: data.results[0].components.state_code}))
+
     const itemIds = []
     const arr = document.querySelectorAll(".item-map-pointer")
     // this.setState({markers: arr})
@@ -48,12 +67,10 @@ class Container extends React.Component {
 
         if ((elemBottom >= docViewTop) && (elemTop <= docViewBottom)){
           itemIds.push(parseInt(arr[i].id))
-          console.log('push');
         }
     }
 
     if (itemIds.length > 0) {
-      console.log(itemIds)
       if (this.props.searchResults) {
         this.props.fetchMapItemsSearch(itemIds)
       } else {
@@ -104,10 +121,11 @@ class Container extends React.Component {
     }
     return (
       <div style={style}>
-      <GoogleMapReact google={this.props.google}
+      <GoogleMapReact ref={(map) => this._map = map}
       zoom={11}
+      yesIWantToUseGoogleMapApiInternals={true}
       onChange={this.isInView}
-      onGoogleApiLoaded={setTimeout(() => this.onGoogleApiLoaded(), 200)} //instead of just this.onGoogleApiLoaded//
+      onGoogleApiLoaded={({ map, maps }) => this.onGoogleApiLoaded(map, maps)}
       center={this.props.searchLocation ?
       this.props.searchLocation
       :
@@ -118,7 +136,6 @@ class Container extends React.Component {
         :
         this.props.userGeo
       }
-        // bounds={bounds}
         >
       {this.props.searchResults ?
         this.props.searchResults.map(itemObj => {
@@ -140,19 +157,18 @@ class Container extends React.Component {
         :
         this.props.items.map(itemObj => {
           return (
-          <div
-          className="item-map-pointer"
-          key={itemObj.id}
-          id={itemObj.id}
-          onClick={this.onMarkerClick}
-          lat={parseFloat(itemObj.lat.toFixed(4).toString() + (Math.random() * 1000))}
-          lng={parseFloat(itemObj.lng.toFixed(4).toString() + (Math.random() * 1000))}
-          text='marker'
-          >
-            <span className='map-pointer-text'>
-            ${itemObj.rental_price}
-            </span>
-          </div>
+            <div
+            className="item-map-pointer"
+            key={itemObj.id}
+            id={itemObj.id}
+            lat={parseFloat(itemObj.lat.toFixed(4).toString() + (Math.random() * 1000))}
+            lng={parseFloat(itemObj.lng.toFixed(4).toString() + (Math.random() * 1000))}
+            text='marker'
+            >
+              <span className='map-pointer-text'>
+              ${itemObj.rental_price}
+              </span>
+            </div>
           )
         })
 
@@ -166,10 +182,20 @@ class Container extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    searchResults: state.searchResults
+    searchResults: state.searchResults,
+    mappedItems: state.mapItems
   }
 }
 
-export default connect(mapStateToProps, {fetchMapItems, fetchMapItemsSearch})(GoogleApiWrapper({
+export default connect(mapStateToProps, {fetchMapItems, fetchMapItemsSearch, mapCityState})(GoogleApiWrapper({
   apiKey: 'AIzaSyAoWjEeNWpF5PuTdxlaBj3Mx3h9Qtfp24w'
 })(Container))
+
+// <div
+// lat={parseFloat(itemObj.lat.toFixed(4).toString() + (Math.random() * 1000))}
+// lng={parseFloat(itemObj.lng.toFixed(4).toString() + (Math.random() * 1000))}
+// className="infoWindow">
+//   <div>
+//    {itemObj.title}
+//   </div>
+// </div>

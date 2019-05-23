@@ -31,7 +31,6 @@ class ListItemForm extends Component {
       [e.target.name]: e.target.value
     })
   }
-// CE46-DY64-EB73-HF91
   handleSubmit = e => {
     e.preventDefault()
 

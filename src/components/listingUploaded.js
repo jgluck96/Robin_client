@@ -32,7 +32,7 @@ import { fetchItems } from '../actions/items'
             <p class="text-muted mb-5">Thank you, {this.props.user.name}. Your listing has been uploaded!</p>
             <p class="mb-5">
               <div class="btn btn-primary mr-2 mb-2" onClick={() => this.props.history.push('./browse-all')}>Browse Listings</div>
-              <div class="btn btn-outline-muted mb-2" onClick={() => this.props.history.push('./item-show')}>Review your new listing</div>
+              <div class="btn btn-outline-muted mb-2" onClick={() => this.props.history.push(`./item-show/${this.props.showItem.id}`)}>Review your new listing</div>
             </p>
           </div>
         </section>
@@ -49,7 +49,8 @@ import { fetchItems } from '../actions/items'
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    showItem: state.showItem
   }
 }
 export default withRouter(connect(mapStateToProps, {itemShow, fetchItems})(Uploaded))

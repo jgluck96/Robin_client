@@ -10,6 +10,13 @@ export const fetchItems = () => {
   }
 }
 
+export const mapCityState = (csobject) => {
+  return {
+    type: 'MAP_CITY_STATE',
+    payload: csobject
+  }
+}
+
 export const fetchMapItems = (idArray) => {
   return (dispatch) => {
     fetch('http://localhost:3000/items')
@@ -44,8 +51,6 @@ export const addListing = (item, userId, photos) => {
     .then(resp => resp.json())
     .then(itemObj => {
       localStorage.setItem("currentItem", JSON.stringify(itemObj))
-      dispatch({type: 'SHOW_ITEM', item: itemObj})
-
       fetch('http://localhost:3000/own_items',{
         method: 'POST',
         headers: {
@@ -60,6 +65,8 @@ export const addListing = (item, userId, photos) => {
         },
         body: JSON.stringify({photos: photos, item_id: itemObj.id})
       })
+      dispatch({type: 'SHOW_ITEM', item: itemObj})
+
     })
   }
 }
