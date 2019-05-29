@@ -77,7 +77,7 @@ class Account extends Component {
         <TabPanel>
           <PerfectScrollbar style={{height: '500px', padding: '10px', border: '1px solid #c5c5c5', width: '97%', marginTop: '0px'}}>
           {newReqs.map(req => {
-            return <RequestCard id={this.props.requests.indexOf(req)} request={req} requester={req.requesterObj} item={req.itemObj}/>
+            return <RequestCard key={Math.random()} id={this.props.requests.indexOf(req)} request={req} requester={req.requesterObj} item={req.itemObj}/>
           })}
           </PerfectScrollbar>
         </TabPanel>
@@ -85,7 +85,7 @@ class Account extends Component {
           <PerfectScrollbar style={{height: '500px', padding: '10px', border: '1px solid #c5c5c5', width: '97%', marginTop: '0px'}}>
           {
             acceptedReqs.map(req => {
-              return <RentalCard request={req} requester={req.requesterObj} item={req.itemObj}/>
+              return <RentalCard key={Math.random()} request={req} requester={req.requesterObj} item={req.itemObj}/>
             })
           }
           </PerfectScrollbar>
@@ -94,7 +94,7 @@ class Account extends Component {
           <PerfectScrollbar style={{height: '500px', padding: '10px', border: '1px solid #c5c5c5', width: '97%', marginTop: '0px'}}>
           {
             this.props.whatIWant.map(whatIWant => {
-              return <WhatIWantCard whatIWant={whatIWant} owner={whatIWant.receiverObj} item={whatIWant.itemObj}/>
+              return <WhatIWantCard key={Math.random()} whatIWant={whatIWant} owner={whatIWant.receiverObj} item={whatIWant.itemObj}/>
             })
           }
           </PerfectScrollbar>

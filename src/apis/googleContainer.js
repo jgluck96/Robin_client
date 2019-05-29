@@ -34,26 +34,47 @@ class Container extends React.Component {
 
   isInView = () => {
     // console.log(this._map.props);
-    const itemIds = []
-    const arr = document.querySelectorAll(".item-map-pointer")
-    for (let i = 0; i < arr.length; i++) {
-      const width = $(window).width()
-      console.log(width);
-      const docViewLeft = $(window).scrollLeft() + width/2
-      const docViewRight = width - $(window).scrollLeft()
-      const elemWidth = $(arr[i]).offset().left + width/30
-      const docViewTop = $(window).scrollTop();
-      const docViewBottom = docViewTop + $(window).height();
-      const elemTop = $(arr[i]).offset().top;
-      const elemBottom = elemTop + $(arr[i]).height();
-
-        if ((elemBottom >= docViewTop) && (elemTop <= docViewBottom) && (elemWidth >= docViewLeft) && (elemWidth <= docViewRight)){
-          itemIds.push(parseInt(arr[i].id))
-
-
-        }
+    if ($(window).width() < 550) {
+      $(".mapContCheck").addClass("mapContCheckMobile")
+      $(".col-lg-6.map-side-lg.pr-lg-0").insertBefore(".p-xl-5")
+    } else {
+      $(".mapContCheck").removeClass("mapContCheckMobile")
+      $(".col-lg-6.map-side-lg.pr-lg-0").insertAfter(".p-xl-5")
 
     }
+    const itemIds = []
+    const arr = document.querySelectorAll(".item-map-pointer")
+    if ($(window).width() < 550) {
+      for (let i = 0; i < arr.length; i++) {
+        const widthM = $(window).width()
+        const docViewLeftM = $(window).scrollLeft()
+        const docViewRightM = widthM - docViewLeftM
+        const elemWidthM = $(arr[i]).offset().left + widthM/30
+        const docViewTopM = $(window).scrollTop() + $(window).height()/12
+        const docViewBottomM = $(window).height()/2.2;
+        const elemTopM = $(arr[i]).offset().top;
+        const elemBottomM = elemTopM + $(arr[i]).height();
+
+          if ((elemBottomM >= docViewTopM) && (elemTopM <= docViewBottomM) && (elemWidthM >= docViewLeftM) && (elemWidthM <= docViewRightM)){
+            itemIds.push(parseInt(arr[i].id))
+          }
+        }
+    } else {
+      for (let i = 0; i < arr.length; i++) {
+        const width = $(window).width()
+        const docViewLeft = $(window).scrollLeft() + width/2
+        const docViewRight = width - $(window).scrollLeft()
+        const elemWidth = $(arr[i]).offset().left + width/30
+        const docViewTop = $(window).scrollTop() + $(window).height()/12
+        const docViewBottom = $(window).height();
+        const elemTop = $(arr[i]).offset().top;
+        const elemBottom = elemTop + $(arr[i]).height();
+
+          if ((elemBottom >= docViewTop) && (elemTop <= docViewBottom) && (elemWidth >= docViewLeft) && (elemWidth <= docViewRight)){
+            itemIds.push(parseInt(arr[i].id))
+          }
+        }
+      }
 
     if (itemIds.length > 0) {
       if (this.props.searchResults) {
@@ -67,15 +88,9 @@ class Container extends React.Component {
       // this.props.fetchMapItemsSearch([])
 
     }
-}
+  }
 
   render() {
-
-
-    const style = {
-      width: '50vw',
-      height: '92vh'
-    }
 
     if (!this.props.loaded) {
       return (
@@ -85,7 +100,7 @@ class Container extends React.Component {
       )
     }
     return (
-      <div style={style}>
+      <div className="mapContCheck">
       <GoogleMapReact ref={(map) => this._map = map}
       zoom={11}
       yesIWantToUseGoogleMapApiInternals={true}

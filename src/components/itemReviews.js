@@ -10,9 +10,9 @@ class ItemReview extends Component {
 
   rating = (n) => {
     if (n === 1) {
-      return <i className="fa fa-xs fa-star text-primary"></i>
+      return <i key={Math.random()} className="fa fa-xs fa-star text-primary"></i>
     } else {
-      return [<i className="fa fa-xs fa-star text-primary"></i>, this.rating(n - 1)]
+      return [<i key={Math.random()} className="fa fa-xs fa-star text-primary"></i>, this.rating(n - 1)]
     }
   }
 

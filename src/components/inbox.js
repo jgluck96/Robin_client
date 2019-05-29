@@ -20,6 +20,15 @@ class Inbox extends Component {
     falseStuff: ''
   }
 
+  componentDidUpdate(){
+    if (this.props.notifs) {
+      const falseStuff = [].concat.apply([], [this.props.notifs.falseReadRequests, this.props.notifs.falseReadRentals, this.props.notifs.falseReadAndExpiredRentals, this.props.notifs.falseWhatIWant])
+      if (!this.state.falseStuff) {
+        this.setState({falseStuff: falseStuff})
+      }
+    }
+  }
+
   show = item => {
     localStorage.setItem("currentItem", JSON.stringify(item))
     this.props.itemShow(item)
@@ -52,12 +61,6 @@ class Inbox extends Component {
 
 
   render(){
-    if (this.props.notifs) {
-      const falseStuff = [].concat.apply([], [this.props.notifs.falseReadRequests, this.props.notifs.falseReadRentals, this.props.notifs.falseReadAndExpiredRentals, this.props.notifs.falseWhatIWant])
-      if (!this.state.falseStuff) {
-        this.setState({falseStuff: falseStuff})
-      }
-    }
     return(
       <div >
       <label style={{fontSize: '20px', top: '22%', left: '50px', marginTop: '15%', position: 'relative'}} className="row form-label">Notifications</label>
@@ -69,7 +72,7 @@ class Inbox extends Component {
             {this.state.falseStuff.length > 0 ?
               this.state.falseStuff.map(notif => {
                 if (Object.keys(notif).length === 3 && typeof (notif.requesterObj) === 'object') {
-                  return <Message remove={this.remove} request={notif.request} notif={notif} requester={notif.request.requester} item={notif.itemObj}/>
+                  return <Message key={Math.random()} remove={this.remove} request={notif.request} notif={notif} requester={notif.request.requester} item={notif.itemObj}/>
                 } else if (Object.keys(notif).length === 3 && typeof (notif.receiverObj) === 'object') {
                     if (notif.request.accepted) {
                       return (<div style={{width:'100%', backgroundColor: 'rgba(192,192,192,0.3)', border: '1px solid #c5c5c5'}}>
@@ -81,7 +84,7 @@ class Inbox extends Component {
                       </div>)
                     }
                 } else {
-                  return <Message remove={this.remove} rental={notif} item={notif.item}/>
+                  return <Message key={Math.random()} remove={this.remove} rental={notif} item={notif.item}/>
                 }
               })
               :

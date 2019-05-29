@@ -205,10 +205,9 @@ a {
 }
 
 
-a:hover {
+/* a:hover {
   color: #2a5d2b;
-  /* text-decoration: underline; */
-}
+} */
 
 a:not([href]):not([tabindex]) {
   color: inherit;
@@ -1193,6 +1192,13 @@ pre code {
   }
 }
 
+@media (min-width: 550px) {
+  .col-lg-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
 @media (min-width: 992px) {
   .col-lg {
     flex-basis: 0;
@@ -1224,10 +1230,7 @@ pre code {
     flex: 0 0 41.66667%;
     max-width: 41.66667%;
   }
-  .col-lg-6 {
-    flex: 0 0 50%;
-    max-width: 50%;
-  }
+
   .col-lg-7 {
     flex: 0 0 58.33333%;
     max-width: 58.33333%;
@@ -4178,6 +4181,9 @@ body {
   font-size: 1.25rem;
   line-height: 1;
   background-color: transparent;
+  position: fixed;
+  right: 0;
+  top: 0.18em
 }
 
 .navbar-toggler:hover, .navbar-toggler:focus {
@@ -9086,14 +9092,16 @@ button.bg-dark:focus {
   }
 }
 
+.mt-lg-0,
+.my-lg-0 {
+  margin-top: 0 !important;
+}
+
 @media (min-width: 992px) {
   .m-lg-0 {
     margin: 0 !important;
   }
-  .mt-lg-0,
-  .my-lg-0 {
-    margin-top: 0 !important;
-  }
+
   .mr-lg-0,
   .mx-lg-0 {
     margin-right: 0 !important;
@@ -11305,10 +11313,27 @@ a.text-dark:hover, a.text-dark:focus {
   z-index: 5;
 }
 
-@media (min-width: 992px) {
+/* @media (max-width: 549px) {
   .map-side-lg {
-    position: fixed;
+    height: 35%;
     top: 8.15%;
+  }
+} */
+
+.mapContCheck {
+  width: 50vw;
+  height: 92vh
+}
+
+.mapContCheckMobile {
+  width: 100vw;
+  height: 40vh
+}
+
+@media (min-width: 550px) {
+  .map-side-lg {
+    position: sticky;
+    top: 8.5%;
     height: 93.5%;
     right: 0;
   }
@@ -13496,6 +13521,11 @@ button.mfp-close {
      Colours and backgrounds
     ------------------------
 */
+
+.card:hover{
+
+}
+
 .text-hover-primary:focus, .text-hover-primary:hover {
   color: #9eebfa !important;
 }
@@ -13512,9 +13542,9 @@ button.mfp-close {
   background: #f8c7dd;
 }
 
-.text-hover-success:focus, .text-hover-success:hover {
+/* .text-hover-success:focus, .text-hover-success:hover {
   color: #28a745 !important;
-}
+} */
 
 .bg-success-light {
   background: #86e29b;

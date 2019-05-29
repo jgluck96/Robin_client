@@ -43,10 +43,14 @@ class App extends Component {
     }
   }
 
-  componentDidUpdate(){
-    this.props.fetchWhatIWant(this.props.user.id)
-    this.props.fetchRequests(this.props.user.id)
-    this.props.fetchMyRentals(this.props.user.id)
+  componentDidUpdate(prevState){
+    console.log(prevState);
+    console.log(this.props.user);
+    if (prevState.user !== this.props.user) {
+      this.props.fetchWhatIWant(this.props.user.id)
+      this.props.fetchRequests(this.props.user.id)
+      this.props.fetchMyRentals(this.props.user.id)
+    }
     // console.log(this.p);
   }
 

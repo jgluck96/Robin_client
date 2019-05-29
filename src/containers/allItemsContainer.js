@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import ItemCard from '../components/itemCard'
 import FilterForm from '../components/filterForm'
 import { connect } from 'react-redux';
-import { fetchItems } from '../actions/items'
+import { fetchItems, itemShow } from '../actions/items'
 import Loading from 'react-loading-components';
 import Pagination from "react-js-pagination";
 import MapContainer from '../apis/googleContainer'
@@ -21,9 +21,10 @@ class ItemsContainer extends Component {
 
   componentDidMount() {
     this.props.fetchItems()
+    this.props.itemShow(null)
+
   }
   componentDidUpdate(prevState, prevProps) {
-    console.log(this.state.searchResults);
     if (this.state.searchResults !== prevState.fetchMapItemsSearch) {
       this.setState({searchTerm: prevState.searchTerm, searchResults: prevState.mapItemsSearch})
     }
@@ -88,7 +89,7 @@ class ItemsContainer extends Component {
     return(
       <React.Fragment>
       {this.props.userGeo ?
-        <div className="row" style={{marginBottom: '10%'}}>
+        <div className="row" style={{marginBottom: '2%'}}>
           <div className="col-lg-6 py-4 p-xl-5">
             <FilterForm />
             <div className="d-flex justify-content-between align-items-center flex-column flex-md-row mb-4">
@@ -113,11 +114,11 @@ class ItemsContainer extends Component {
               </div>
             </div>
             {this.state.sortType ?
-              <div class="btn btn-primary mb-2">{this.state.sortType}<span style={{marginLeft: '20px', cursor: 'pointer'}} onClick={this.reset}>x</span></div>
+              <div className="btn btn-primary mb-2">{this.state.sortType}<span style={{marginLeft: '20px', cursor: 'pointer'}} onClick={this.reset}>x</span></div>
               : null
             }
             {this.props.searchTerm ?
-              <div class="btn btn-primary mb-2">{this.props.searchTerm}<span style={{marginLeft: '20px', cursor: 'pointer'}} onClick={this.reset}>x</span></div>
+              <div className="btn btn-primary mb-2">{this.props.searchTerm}<span style={{marginLeft: '20px', cursor: 'pointer'}} onClick={this.reset}>x</span></div>
               : null
             }
             <div className="row">
@@ -136,7 +137,7 @@ class ItemsContainer extends Component {
           }) : null
         }
             </div>
-            <div style={{marginTop: '25%'}}>
+            <div >
             <Pagination
               activePage={this.state.activePage}
               itemsCountPerPage={8}
@@ -179,4 +180,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps, {fetchItems})(ItemsContainer)
+export default connect(mapStateToProps, {fetchItems, itemShow})(ItemsContainer)

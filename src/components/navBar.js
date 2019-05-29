@@ -75,8 +75,8 @@ class NavBar extends Component {
       <header className='header'>
         <nav className="navbar navbar-expand-lg fixed-top shadow navbar-light bg-white">
           <div className="container-fluid">
-            <div>
-              <a href='/'>
+            <div className="d-flex align-items-center" style={{height: '32px'}}>
+              <a className="navbar-brand py-1" href='/'>
                 <img className='imgg' src="https://i.ibb.co/TTZVJWn/logo.png" alt='logo'></img>
               </a>
             </div>

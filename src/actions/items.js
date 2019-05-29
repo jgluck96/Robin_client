@@ -72,26 +72,33 @@ export const addListing = (item, userId, photos) => {
 }
 
 export const itemShow = item => {
-  return (dispatch) => {
-    fetch('http://localhost:3000/users')
-      .then(resp => resp.json())
-      .then(users => {
+    return (dispatch) => {
+      if (item) {
+      fetch('http://localhost:3000/users')
+        .then(resp => resp.json())
+        .then(users => {
 
-        const foundUser = users.find(user => user.own_items.includes(user.own_items.find(ownItem => ownItem.item_id === item.id)))
-        dispatch({type: 'SHOW_ITEM_OWNER', payload: foundUser})
-        dispatch({type: 'SHOW_ITEM', item: item})
-        fetch('http://localhost:3000/items')
-          .then(resp => resp.json())
-          .then(items => {
-            // should
-            const ownerItems = []
-            foundUser.own_items.forEach(ownItem => {
-              // ownerItems.push()
-                ownerItems.push(items.find(item => item.id === ownItem.item_id))
+          const foundUser = users.find(user => user.own_items.includes(user.own_items.find(ownItem => ownItem.item_id === item.id)))
+          dispatch({type: 'SHOW_ITEM_OWNER', payload: foundUser})
+          dispatch({type: 'SHOW_ITEM', item: item})
+          fetch('http://localhost:3000/items')
+            .then(resp => resp.json())
+            .then(items => {
+              // should
+              const ownerItems = []
+              foundUser.own_items.forEach(ownItem => {
+                // ownerItems.push()
+                  ownerItems.push(items.find(item => item.id === ownItem.item_id))
+              })
+              dispatch({type: 'SHOW_ITEM_OWNER_ITEMS', payload: ownerItems.filter(ownerItem => item.id !== ownerItem.id)})
             })
-            dispatch({type: 'SHOW_ITEM_OWNER_ITEMS', payload: ownerItems.filter(ownerItem => item.id !== ownerItem.id)})
-          })
-      })
+        })
+    } else {
+      dispatch({type: 'SHOW_ITEM_OWNER', payload: null})
+      dispatch({type: 'SHOW_ITEM', item: null})
+      dispatch({type: 'SHOW_ITEM_OWNER_ITEMS', payload: null})
+
+    }
   }
 }
 // export const showItemOwner = item => {
