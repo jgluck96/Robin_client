@@ -9,8 +9,10 @@ import $ from 'jquery'
 import {fetchMapItems, fetchMapItemsSearch, mapCityState} from '../actions/items'
 import {connect} from 'react-redux'
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
+const ENV = require("dotenv")
+ENV.config()
 
+const mapKeys = { key: process.env.REACT_APP_GOOGLE_API, language: 'en', }
 
 class Container extends React.Component {
 
@@ -19,8 +21,8 @@ class Container extends React.Component {
       setTimeout(() => this.isInView(), 500)
 
     }
-    // console.log(prevState.fetchMapItems);
   }
+
 
   onGoogleApiLoaded = (map, maps) => {
     console.log(this._map);
@@ -91,14 +93,6 @@ class Container extends React.Component {
   }
 
   render() {
-
-    if (!this.props.loaded) {
-      return (
-        <div style={{display: 'block', marginTop: '25%', marginLeft: '52%', marginBottom: '17.5%'}}>
-          <Loading type='puff' width={100} height={100} fill='#9eebfa' />
-        </div>
-      )
-    }
     return (
       <div className="mapContCheck">
       <GoogleMapReact ref={(map) => this._map = map}
@@ -167,8 +161,9 @@ const mapStateToProps = state => {
   }
 }
 
+// export default connect(mapStateToProps, {fetchMapItems, fetchMapItemsSearch, mapCityState})(Container)
 export default connect(mapStateToProps, {fetchMapItems, fetchMapItemsSearch, mapCityState})(GoogleApiWrapper({
-  apiKey: 'AIzaSyAoWjEeNWpF5PuTdxlaBj3Mx3h9Qtfp24w'
+  apiKey: process.env.REACT_APP_GOOGLE_API
 })(Container))
 
 // <div

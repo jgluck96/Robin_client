@@ -8,7 +8,7 @@ import { createStore, applyMiddleware } from 'redux'
 import rootReducer from './reducers/index'
 import { BrowserRouter } from "react-router-dom";
 import thunk from 'redux-thunk'
-require('dotenv').config()
+require('dotenv').config({path: __dirname + '/.env'})
 
 // import {ActionCableProvider} from 'react-actioncable-provider'
 
